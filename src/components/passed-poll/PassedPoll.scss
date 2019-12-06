@@ -1,0 +1,31 @@
+.answer {
+  justify-content: space-between;
+  border-radius: 5px;
+  padding: 15px 0;
+  margin: 10px 0;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.correct {
+  @extend .answer;
+  border-color: rgba(23, 163, 184, 1);
+  background-color: rgba(23, 163, 184, 0.05);
+  border-width: 0 0 0 5px;
+}
+
+.wrong {
+  @extend .answer;
+  border-color: rgba(220, 53, 70, 1);
+  background-color: rgba(220, 53, 70, 0.05);
+  border-width: 0 0 0 5px;
+}
+
+.pass-again-btn {
+  float: right;
+  margin-bottom: 20px;
+}
+
+.passed-poll-score {
+  text-align: right;
+}

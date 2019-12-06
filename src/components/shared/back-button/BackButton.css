@@ -1,0 +1,10 @@
+.back-btn {
+    position: fixed;
+    top: 66px;
+    left: 10px;
+    margin: 10px;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    line-height: normal;    
+}
