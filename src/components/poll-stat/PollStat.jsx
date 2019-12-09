@@ -14,22 +14,23 @@ import "./PollStat.css";
 
 const PollStat = ({ history, poll }) => {
   const { questions } = poll;
-  
+
   const [deletePoll] = useMutation(deletePollMutation, {
     update(cache, { data: { deletePoll } }) {
-      const data = cache.readQuery({ query: getAllPollsQuery });
+      const { allPolls } = cache.readQuery({ query: getAllPollsQuery });
       const deleteIndex = _.findIndex(
-        data.allPolls,
+        allPolls,
         item => item.id === deletePoll.id
       );
+
       if (deleteIndex < 0) {
-        console.log(deleteIndex);
         return;
       }
 
+      allPolls.splice(deleteIndex, 1);
       cache.writeQuery({
         query: getAllPollsQuery,
-        data: { allPolls: data.allPolls }
+        data: { allPolls }
       });
     }
   });

@@ -105,7 +105,7 @@ export const CreatePoll = props => {
   };
 
   return (
-    <Form className="create-form" onSubmit={handleSubmit}>
+    <Form className="create-form">
       <BackButton onClick={() => props.history.push("/polls")} />
       <div style={headerStyle}>
         <Form.Row className="first-line">
@@ -159,7 +159,8 @@ export const CreatePoll = props => {
         block
         className="create-poll-btn bottom-button"
         disabled={!isFormValid}
-        type="submit"
+        type="button"
+        onClick={handleSubmit}
       >
         Create
       </Button>
