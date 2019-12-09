@@ -14,14 +14,21 @@
 }
 
 .question-stat-title {
-    width: 560px;
+    width: 500px;
 }
 
 .question-stat-choices{
-    width: 100px;
+    width: 150px;
     padding: 10px;
+    margin-right: 20px;
 }
 .wait-alert{
     color: rgb(172, 172, 172);
     
+}
+.line{
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
 }

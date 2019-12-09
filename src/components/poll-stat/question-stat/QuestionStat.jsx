@@ -42,34 +42,18 @@ const QuestionStat = ({ question: { id } }) => {
 
   const statView = () => {
     return answeredQuestions.lenght > 0 ? (
-      <div>
-        <div className="question-stat-choices">
-          {Object.values(stat).map(({ title, color }) => (
-            <Row>
-              <span style={{ color }} className="oi oi-media-record"></span>
-              &nbsp;
-              <p>
-                {title}
-                &nbsp;
-                {answer === title && <span className="oi oi-check"></span>}
-              </p>
-            </Row>
-          ))}
-        </div>
-
-        <PieChart
-          className="question-chart"
-          animate
-          label
-          labelPosition={50}
-          labelStyle={{
-            fill: "white",
-            fontFamily: "sans-serif",
-            fontSize: "13px"
-          }}
-          data={Object.values(stat).filter(({ value }) => value !== 0)}
-        />
-      </div>
+      <PieChart
+        className="question-chart"
+        animate
+        label
+        labelPosition={50}
+        labelStyle={{
+          fill: "white",
+          fontFamily: "sans-serif",
+          fontSize: "13px"
+        }}
+        data={Object.values(stat).filter(({ value }) => value !== 0)}
+      />
     ) : (
       <p className="wait-alert">waiting for answers</p>
     );
@@ -79,12 +63,23 @@ const QuestionStat = ({ question: { id } }) => {
   });
 
   return (
-    <>
-      <div className="question-stat-content">
-        <p className="question-stat-title">{question.title}</p>
-        {statView()}
+    <div className="question-stat-content">
+      <p className="question-stat-title">{question.title}</p>
+
+      <div className="question-stat-choices">
+        {Object.values(stat).map(({ title, color }) => (
+          <Row className="row-flex line">
+            <div>
+              <span style={{ color }} className="oi oi-media-record"></span>
+              &nbsp;
+              {title}
+            </div>
+            {answer === title && <span className="oi oi-check"></span>}
+          </Row>
+        ))}
       </div>
-    </>
+      {statView()}
+    </div>
   );
 };
 
