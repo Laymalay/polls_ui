@@ -29,7 +29,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "resolve-url-loader": "^3.1.0",
-    "typeface-roboto": "0.0.75"
+    "typeface-roboto": "0.0.75",
+    "underscore": "^1.9.1"
   },
   "scripts": {
     "start": "react-scripts start",

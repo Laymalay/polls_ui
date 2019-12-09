@@ -1,10 +1,9 @@
 import React, { useState, useMemo } from "react";
-import { useQuery, useMutation } from "react-apollo";
+import { useMutation } from "react-apollo";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 
-import { getPollQuery, pollPassedByUserQuery } from "../../schema/queries";
-import Loading from "../shared/loading";
+import { pollPassedByUserQuery } from "../../schema/queries";
 import PollHeader from "../shared/poll-header";
 import { createPassedPollMutation } from "../../schema/mutations";
 
@@ -19,7 +18,6 @@ const PollPassing = ({ poll, passRequest }) => {
         query: pollPassedByUserQuery,
         variables: { poll: poll.id }
       });
-      console.log(pollPassedByUser);
 
       cache.writeQuery({
         query: pollPassedByUserQuery,
@@ -45,9 +43,6 @@ const PollPassing = ({ poll, passRequest }) => {
       );
     }
   }, [poll]);
-
-  // if (loading) return <Loading />;
-  // if (error) return <>Error</>;
 
   const { id, title, description, imagePath, questions, creator } = poll;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import PieChart from "react-minimal-pie-chart";
 import { useQuery } from "react-apollo";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import randomColor from "randomcolor";
 
 import { getQuestionQuery } from "../../../schema/queries";
@@ -58,7 +58,7 @@ const QuestionStat = ({ question: { id } }) => {
               <p>
                 {title}
                 &nbsp;
-                {answer == title && <span className="oi oi-check"></span>}
+                {answer === title && <span className="oi oi-check"></span>}
               </p>
             </Row>
           ))}
@@ -74,7 +74,7 @@ const QuestionStat = ({ question: { id } }) => {
             fontFamily: "sans-serif",
             fontSize: "13px"
           }}
-          data={Object.values(stat).filter(({ value }) => value != 0)}
+          data={Object.values(stat).filter(({ value }) => value !== 0)}
         />
       </div>
     </>

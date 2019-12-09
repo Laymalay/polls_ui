@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useMutation, useQuery } from "react-apollo-hooks";
-import { Form, Button, Col, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { useMutation } from "react-apollo-hooks";
+import { Form, Button } from "react-bootstrap";
 import { zipWith } from "lodash";
 import { updatePollMutation } from "../../../schema/mutations";
 
@@ -18,7 +18,6 @@ const HeaderForm = ({ poll }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(title, description, imagePath);
     updatePoll({
       variables: {
         title,

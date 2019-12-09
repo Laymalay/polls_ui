@@ -1,28 +1,41 @@
-import React, { useState } from "react";
-import { useQuery, useMutation } from "react-apollo";
+import React from "react";
+import { useMutation } from "react-apollo";
 import { withRouter } from "react-router";
-import { Form, Button, Col, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import _ from "underscore";
 
-import { pollPassedByUserQuery, getPollQuery } from "../../schema/queries";
-import Loading from "../shared/loading";
-import PassedPoll from "../passed-poll";
+import { getAllPollsQuery } from "../../schema/queries";
 import QuestionStat from "./question-stat";
-import PollPassing from "../poll-passing";
 import BackButton from "../shared/back-button";
-import { getCurrentUserQuery } from "../../schema/queries";
 import { deletePollMutation } from "../../schema/mutations";
-import PollHeader from "../shared/poll-header";
 import HeaderForm from "./header-form";
 
 import "./PollStat.css";
 
 const PollStat = ({ history, poll }) => {
   const { questions } = poll;
-  const [deletePoll] = useMutation(deletePollMutation);
+  
+  const [deletePoll] = useMutation(deletePollMutation, {
+    update(cache, { data: { deletePoll } }) {
+      const data = cache.readQuery({ query: getAllPollsQuery });
+      const deleteIndex = _.findIndex(
+        data.allPolls,
+        item => item.id === deletePoll.id
+      );
+      if (deleteIndex < 0) {
+        console.log(deleteIndex);
+        return;
+      }
+
+      cache.writeQuery({
+        query: getAllPollsQuery,
+        data: { allPolls: data.allPolls }
+      });
+    }
+  });
 
   const handleDelete = () => {
     deletePoll({ variables: { id: poll.id } }).then(data => {
-      console.log("delete poll:", data);
       history.push("/polls");
     });
   };

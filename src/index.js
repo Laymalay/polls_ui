@@ -17,14 +17,10 @@ import { AUTH_TOKEN } from './constants'
 import { CookiesProvider } from 'react-cookie';
 import { resolvers, typeDefs } from './resolvers';
 
-console.log(process.env.REACT_APP_API_URL)
-
 const httpLink = createHttpLink({
   uri: `${process.env.REACT_APP_API_URL}/graphql`,
   credentials: 'omit',
 });
-
-
 
 const authMiddleware = setContext(async (req, { headers }) => {
   const token = localStorage.getItem(AUTH_TOKEN);

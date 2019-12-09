@@ -29,7 +29,7 @@ export const Question = ({ question, updateQuestions }) => {
     if (enableAnswer && answer === "") {
       setQuestionAnswer(questionChoices[0]);
     }
-  }, [enableAnswer]);
+  }, [enableAnswer, answer, questionChoices]);
 
   return (
     <div className={`question-form-${formType}`}>

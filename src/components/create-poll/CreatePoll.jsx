@@ -56,7 +56,8 @@ export const CreatePoll = props => {
     justifyContent: "space-between"
   };
 
-  const isFormValid = title.length > 0 && description.length > 0;
+  const isFormValid =
+    title.length > 0 && description.length > 0 && questions.length > 1;
 
   const handleSubmit = event => {
     event.preventDefault();

@@ -49,7 +49,7 @@ export const Header = props => {
       {username && (
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            Signed in as:{" "}
+            Signed in as:
             <Link className="user-link" to="/userprofile">
               {username}
             </Link>
@@ -57,8 +57,9 @@ export const Header = props => {
           {isStaff && (
             <a
               className="settings-link"
-              href="http://localhost:8000/admin"
+              href={`${process.env.REACT_APP_API_URL}/admin`}
               target="_blank"
+              rel="noopener noreferrer"
             >
               <span className="oi oi-wrench"></span>
             </a>
