@@ -79,26 +79,27 @@ const HeaderForm = ({ poll }) => {
             Update
           </Button>
         </div>
-        <Form.Group>
-          <Form.Control
-            type="text"
-            size="sm"
-            defaultValue={imagePath}
-            placeholder="Image url (optional)"
-            onChange={e => setImagePath(e.target.value)}
-          />
-        </Form.Group>
+        <div>
+          <Form.Group>
+            <Form.Control
+              type="text"
+              size="sm"
+              defaultValue={imagePath}
+              placeholder="Image url (optional)"
+              onChange={e => setImagePath(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group>
-          <Form.Control
-            as="textarea"
-            size="lg"
-            defaultValue={description}
-            className="description"
-            placeholder="Super challenging poll description"
-            onChange={e => setDescription(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group>
+            <Form.Control
+              as="textarea"
+              size="lg"
+              defaultValue={description}
+              placeholder="Super challenging poll description"
+              onChange={e => setDescription(e.target.value)}
+            />
+          </Form.Group>
+        </div>
       </div>
     </Form>
   );

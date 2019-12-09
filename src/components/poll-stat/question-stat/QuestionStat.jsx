@@ -22,9 +22,8 @@ const QuestionStat = ({ question: { id } }) => {
   if (loading) return <Loading />;
   if (error) return <>Error</>;
 
-  console.log(question);
-
   const { answeredQuestions, choices, answer } = question;
+  console.log(answeredQuestions);
   let stat = {};
 
   choices.forEach(
@@ -41,15 +40,9 @@ const QuestionStat = ({ question: { id } }) => {
       })
   );
 
-  answeredQuestions.forEach(answer => {
-    stat[answer.choice.id].value += 1;
-  });
-
-  return (
-    <>
-      <div className="question-stat-content">
-        <p className="question-stat-title">{question.title}</p>
-
+  const statView = () => {
+    return answeredQuestions.lenght > 0 ? (
+      <div>
         <div className="question-stat-choices">
           {Object.values(stat).map(({ title, color }) => (
             <Row>
@@ -76,6 +69,20 @@ const QuestionStat = ({ question: { id } }) => {
           }}
           data={Object.values(stat).filter(({ value }) => value !== 0)}
         />
+      </div>
+    ) : (
+      <p className="wait-alert">waiting for answers</p>
+    );
+  };
+  answeredQuestions.forEach(answer => {
+    stat[answer.choice.id].value += 1;
+  });
+
+  return (
+    <>
+      <div className="question-stat-content">
+        <p className="question-stat-title">{question.title}</p>
+        {statView()}
       </div>
     </>
   );
