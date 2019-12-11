@@ -21,7 +21,7 @@ const PollHeader = ({ imagePath, title, username, description }) => {
           <div className="poll-creator">By {username}</div>
         </div>
       </div>
-      <div className="poll-desc"> {description}</div>
+      <i className="poll-desc"> {description}</i>
     </>
   );
 };

@@ -47,6 +47,7 @@
   overflow: hidden;
   opacity: 0;
   height: 0;
+  max-width: -webkit-fill-available;
   visibility: hidden;
   color: white;
   background-color: rgba(0, 0, 0, 0.747);

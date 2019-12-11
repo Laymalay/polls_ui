@@ -48,7 +48,7 @@ const PollStat = ({ history, poll }) => {
         <HeaderForm poll={poll} />
         <p className="poll-stat-questions">Answer statistics:</p>
         {questions &&
-          questions.map(question => <QuestionStat question={question} />)}
+          questions.map(question => <QuestionStat key={question.title} question={question} />)}
         <Button
           size="lg"
           className="bottom-button"

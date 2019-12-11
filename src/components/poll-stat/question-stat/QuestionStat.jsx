@@ -23,7 +23,7 @@ const QuestionStat = ({ question: { id } }) => {
   if (error) return <>Error</>;
 
   const { answeredQuestions, choices, answer } = question;
-  console.log(answeredQuestions);
+
   let stat = {};
 
   choices.forEach(
@@ -41,7 +41,7 @@ const QuestionStat = ({ question: { id } }) => {
   );
 
   const statView = () => {
-    return answeredQuestions.lenght > 0 ? (
+    return answeredQuestions.length > 0 ? (
       <PieChart
         className="question-chart"
         animate
@@ -58,6 +58,7 @@ const QuestionStat = ({ question: { id } }) => {
       <p className="wait-alert">waiting for answers</p>
     );
   };
+
   answeredQuestions.forEach(answer => {
     stat[answer.choice.id].value += 1;
   });
@@ -68,7 +69,7 @@ const QuestionStat = ({ question: { id } }) => {
 
       <div className="question-stat-choices">
         {Object.values(stat).map(({ title, color }) => (
-          <Row className="row-flex line">
+          <Row key={title} className="row-flex line">
             <div>
               <span style={{ color }} className="oi oi-media-record"></span>
               &nbsp;
