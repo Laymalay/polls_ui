@@ -136,6 +136,7 @@ export const CreatePoll = props => {
           <Form.Control
             as="textarea"
             size="lg"
+            rows="4"
             className="description"
             placeholder="Super challenging poll description"
             onChange={e => setDescription(e.target.value)}

@@ -79,9 +79,11 @@ const PollPassing = ({ poll, passRequest }) => {
           description={description}
         />
         <Form onSubmit={handleSubmit}>
+          <hr />
+          <div className="poll-questions-title">Questions:</div>
           {questions.map(question => (
             <Form.Group key={question.id} className="question" as={Row}>
-              <Form.Label as="legend" column sm={5}>
+              <Form.Label as="legend" column sm={8}>
                 {question.title}
               </Form.Label>
               <Col sm={3}>
@@ -107,7 +109,7 @@ const PollPassing = ({ poll, passRequest }) => {
             type="submit"
           >
             Send
-            </Button>
+          </Button>
         </Form>
       </div>
     </>
