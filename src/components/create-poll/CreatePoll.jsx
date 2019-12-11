@@ -17,10 +17,21 @@ export const CreatePoll = props => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState([{}]);
-
   const [imagePath, setImagePath] = useState(
     "https://i.pinimg.com/originals/21/61/8e/21618e399ac27c80aac237c8e2e5021d.jpg"
   );
+
+  const fields = [title, description, imagePath];
+
+  const validateForm = () => {
+    return {
+      title: title.length === 0 || title.length > 200,
+      description: description.length === 0 || description.length > 400,
+      imagePath: imagePath.length === 0 || imagePath.length > 300
+    };
+  };
+
+  const errors = validateForm();
 
   const {
     data: {
@@ -55,9 +66,8 @@ export const CreatePoll = props => {
     flexDirection: "column",
     justifyContent: "space-between"
   };
-
-  const isFormValid =
-    title.length > 0 && description.length > 0 && questions.length > 1;
+  const isCreateDisabled =
+    Object.keys(errors).some(x => errors[x]) || questions.length <= 1;
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -112,6 +122,8 @@ export const CreatePoll = props => {
           <Form.Group as={Col} md="3">
             <Form.Control
               type="text"
+              isInvalid={errors.title}
+              isValid={!errors.title}
               placeholder="Title"
               onChange={e => setTitle(e.target.value)}
             />
@@ -120,6 +132,9 @@ export const CreatePoll = props => {
           <Form.Group as={Col} md="5">
             <Form.Control
               type="text"
+              isInvalid={errors.imagePath}
+              isValid={!errors.imagePath}
+              value={imagePath}
               placeholder="Image url (optional)"
               onChange={e => setImagePath(e.target.value)}
             />
@@ -137,6 +152,8 @@ export const CreatePoll = props => {
             as="textarea"
             size="lg"
             rows="4"
+            isInvalid={errors.description}
+            isValid={!errors.description}
             className="description"
             placeholder="Super challenging poll description"
             onChange={e => setDescription(e.target.value)}
@@ -159,7 +176,7 @@ export const CreatePoll = props => {
         variant="outline-info"
         block
         className="create-poll-btn bottom-button"
-        disabled={!isFormValid}
+        disabled={isCreateDisabled}
         type="button"
         onClick={handleSubmit}
       >
