@@ -21,13 +21,10 @@ export const CreatePoll = props => {
     "https://i.pinimg.com/originals/21/61/8e/21618e399ac27c80aac237c8e2e5021d.jpg"
   );
 
-  const fields = [title, description, imagePath];
-
   const validateForm = () => {
     return {
       title: title.length === 0 || title.length > 200,
       description: description.length === 0 || description.length > 400,
-      imagePath: imagePath.length === 0 || imagePath.length > 300
     };
   };
 
@@ -54,6 +51,7 @@ export const CreatePoll = props => {
 
   const headerStyle = {
     backgroundImage: `url(${imagePath})`,
+    backgroundColor: 'rgba(23, 163, 184, 0.2)',
     padding: 10,
     backgroundSize: "100% 100%",
     backgroundRepeat: "repeat",
@@ -70,6 +68,7 @@ export const CreatePoll = props => {
     Object.keys(errors).some(x => errors[x]) || questions.length <= 1;
 
   const handleSubmit = event => {
+    
     event.preventDefault();
     createPoll({
       variables: {
@@ -132,8 +131,6 @@ export const CreatePoll = props => {
           <Form.Group as={Col} md="5">
             <Form.Control
               type="text"
-              isInvalid={errors.imagePath}
-              isValid={!errors.imagePath}
               value={imagePath}
               placeholder="Image url (optional)"
               onChange={e => setImagePath(e.target.value)}

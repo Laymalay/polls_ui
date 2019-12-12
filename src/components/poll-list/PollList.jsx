@@ -10,13 +10,12 @@ import "./PollList.scss";
 const PollList = props => {
   const openPollView = pollId => props.history.push(`pollView/${pollId}`);
   const polls = props.polls;
-
   const {
     data: {
       currentUser: { username }
     }
   } = useQuery(getCurrentUserQuery);
-
+  
   return (
     <div>
       <CardColumns className="cards">
