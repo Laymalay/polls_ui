@@ -127,3 +127,9 @@ export const updateUserMutation = gql`
     }
   }
 `;
+
+export const uploadFileMutation = gql`
+  mutation UploadFile($file: Upload!) {
+    uploadFile(file: $file)
+  }
+`;

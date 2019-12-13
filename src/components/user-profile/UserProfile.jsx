@@ -5,13 +5,15 @@ import { Form, Button, Col, Row, Alert } from "react-bootstrap";
 import { zipWith } from "lodash";
 
 import { getCurrentUserQuery } from "../../schema/queries";
-import { updateUserMutation } from "../../schema/mutations";
+import { updateUserMutation, uploadFileMutation } from "../../schema/mutations";
 import Loading from "../shared/loading";
 import BackButton from "../shared/back-button";
 
 import "./UserProfile.css";
 
 const UserProfile = ({ history }) => {
+  const [uploadFile] = useMutation(uploadFileMutation);
+
   const { data: { currentUser } = {}, loading, error } = useQuery(
     getCurrentUserQuery,
     { pollInterval: 500 } // get correct user after cache updated and logout/login actions
