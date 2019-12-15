@@ -11,8 +11,20 @@ import BackButton from "../shared/back-button";
 
 import "./UserProfile.css";
 
+
 const UserProfile = ({ history }) => {
   const [uploadFile] = useMutation(uploadFileMutation);
+
+  const handleFileUpload = (files) => {
+    const file = files[0];
+    console.log(file);
+
+    uploadFile({
+      variables: {
+        file: file
+      }
+    }).then(data => console.log(data));
+  }
 
   const { data: { currentUser } = {}, loading, error } = useQuery(
     getCurrentUserQuery,
@@ -102,13 +114,21 @@ const UserProfile = ({ history }) => {
                   src="https://img2.freepng.ru/20180504/phe/kisspng-professional-computer-icons-avatar-job-5aec571ec854c8.3222584415254382388206.jpg"
                 />
 
-                <Button
+                <Form.Control
+                  onChange={e => handleFileUpload(e.target.files)}
+                  type="file"
+                  className="change-user-photo-btn"
+                  placeholder="Enter your email"
+                />
+
+                {/* <Button
                   className="change-user-photo-btn"
                   variant="outline-info"
-                  disabled
+                  type="file"
+                  onChange={}
                 >
                   Change
-                </Button>
+                </Button> */}
               </div>
 
               <div className="main-user-info">

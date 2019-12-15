@@ -3,14 +3,24 @@ import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
 import { from } from "apollo-link";
-import { AUTH_TOKEN } from "./constants";
-
+import { createUploadLink } from 'apollo-upload-client';
 import { resolvers, typeDefs } from "./resolvers";
 
+import { AUTH_TOKEN } from "./constants";
+
+const GRAPHQL_ENDPOINT =  `${process.env.REACT_APP_API_URL}/graphql`;
+
 const httpLink = createHttpLink({
-  uri: `${process.env.REACT_APP_API_URL}/graphql`,
-  credentials: "omit"
+  uri: GRAPHQL_ENDPOINT,
 });
+
+const uploadLink = createUploadLink({
+  uri: GRAPHQL_ENDPOINT,
+  // headers: {
+  //   "keep-alive": "true",
+  //   "content-type": "application/json"
+  // }
+})
 
 const authMiddleware = setContext(async (req, { headers }) => {
   const token = localStorage.getItem(AUTH_TOKEN);
@@ -25,10 +35,9 @@ const authMiddleware = setContext(async (req, { headers }) => {
 });
 
 export const client = new ApolloClient({
-  uri: `${process.env.REACT_APP_API_URL}/graphql`,
+  uri: GRAPHQL_ENDPOINT,
   cache: new InMemoryCache(),
-  link: from([authMiddleware, httpLink]),
-  credentials: "omit",
+  link: from([authMiddleware, uploadLink]),
   typeDefs,
   resolvers
 });
