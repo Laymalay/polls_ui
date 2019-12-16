@@ -82,6 +82,7 @@ export const meQuery = gql`
       lastName
       about
       isStaff
+      avatar
     }
   }
 `;
@@ -109,6 +110,7 @@ export const getCurrentUserQuery = gql`
       firstName
       lastName
       about
+      avatar
       isStaff
       __typename
     }

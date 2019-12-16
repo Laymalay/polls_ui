@@ -1,61 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { withRouter, Link } from "react-router-dom";
 import { Form, Button, Col, Row, Alert } from "react-bootstrap";
 import { zipWith } from "lodash";
+import { useApolloClient } from "@apollo/react-hooks";
 
 import { getCurrentUserQuery } from "../../schema/queries";
-import { updateUserMutation, uploadFileMutation } from "../../schema/mutations";
+import { updateUserMutation } from "../../schema/mutations";
 import Loading from "../shared/loading";
 import BackButton from "../shared/back-button";
 
 import "./UserProfile.css";
 
-
 const UserProfile = ({ history }) => {
-  const [uploadFile] = useMutation(uploadFileMutation);
+  const client = useApolloClient();
+  const defaultPic =
+    "https://img2.freepng.ru/20180504/phe/kisspng-professional-computer-icons-avatar-job-5aec571ec854c8.3222584415254382388206.jpg";
 
-  const handleFileUpload = (files) => {
+  const inputEl = useRef(null);
+
+  const handleFileUpload = files => {
     const file = files[0];
-    console.log(file);
 
-    uploadFile({
-      variables: {
-        file: file
-      }
-    }).then(data => console.log(data));
-  }
+    const reader = new FileReader();
+    const imgtag = document.getElementById("avatar");
+
+    reader.onload = event => {
+      imgtag.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    setAvatar(file);
+  };
 
   const { data: { currentUser } = {}, loading, error } = useQuery(
     getCurrentUserQuery,
     { pollInterval: 500 } // get correct user after cache updated and logout/login actions
   );
 
-  const [updateUser] = useMutation(updateUserMutation);
+  const [
+    updateUser,
+    { loading: mutationLoading, error: mutationError }
+  ] = useMutation(updateUserMutation);
+
   const {
     email: currentEmail,
     firstName: currentFirstName,
     lastName: currentLastName,
-    about: currentAbout
+    about: currentAbout,
+    avatar: currentAvatar
   } = currentUser;
 
   const [email, setEmail] = useState(currentEmail);
   const [firstName, setFirstName] = useState(currentFirstName);
   const [lastName, setLastName] = useState(currentLastName);
   const [about, setAbout] = useState(currentAbout);
-
+  const [avatar, setAvatar] = useState(currentAvatar);
   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
 
-  const fields = [email, firstName, lastName, about];
+  const fields = [email, firstName, lastName, about, avatar];
 
   const initValues = [
     currentEmail,
     currentFirstName,
     currentLastName,
-    currentAbout
+    currentAbout,
+    currentAvatar
   ];
 
-  // TODO add custom validation to fields
   const validateForm = () => {
     return {
       email: email.length === 0,
@@ -80,6 +92,7 @@ const UserProfile = ({ history }) => {
       variables: {
         ...currentUser,
         email,
+        avatar,
         firstName,
         lastName,
         about
@@ -87,17 +100,42 @@ const UserProfile = ({ history }) => {
       update(cache, { data }) {
         cache.writeData({
           data: {
-            currentUser: { ...currentUser, firstName, email, lastName, about }
+            currentUser: {
+              ...currentUser,
+              firstName,
+              email,
+              lastName,
+              about
+            }
           }
         });
       }
     })
-      .then(_ => setShowUpdateAlert(true))
+      .then(
+        ({
+          data: {
+            updateUser: { avatar }
+          }
+        }) => {
+          setShowUpdateAlert(true);
+          if (avatar) {
+            setAvatar(avatar)
+            client.writeData({
+              data: {
+                currentUser: {
+                  ...currentUser,
+                  avatar
+                }
+              }
+            });
+          }
+        }
+      )
       .catch(e => console.log(e));
   };
 
-  if (loading) return <Loading />;
-  if (error) return <>Error</>;
+  if (loading || mutationLoading) return <Loading />;
+  if (error || mutationError) return <>Error</>;
 
   return (
     <>
@@ -109,26 +147,27 @@ const UserProfile = ({ history }) => {
             <div className="row-flex">
               <div className="column-flex">
                 <img
+                  id="avatar"
+                  onError={() => setAvatar(defaultPic)}
                   alt="userpic"
                   className="user-pic"
-                  src="https://img2.freepng.ru/20180504/phe/kisspng-professional-computer-icons-avatar-job-5aec571ec854c8.3222584415254382388206.jpg"
+                  src={avatar}
                 />
 
-                <Form.Control
+                <input
                   onChange={e => handleFileUpload(e.target.files)}
                   type="file"
-                  className="change-user-photo-btn"
-                  placeholder="Enter your email"
+                  ref={inputEl}
+                  className="input-avatar-hidden"
                 />
 
-                {/* <Button
+                <Button
                   className="change-user-photo-btn"
                   variant="outline-info"
-                  type="file"
-                  onChange={}
+                  onClick={() => inputEl.current.click()}
                 >
                   Change
-                </Button> */}
+                </Button>
               </div>
 
               <div className="main-user-info">
