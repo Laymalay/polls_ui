@@ -14,6 +14,7 @@ import "./UserProfile.css";
 
 const UserProfile = ({ history }) => {
   const client = useApolloClient();
+  
   const defaultPic =
     "https://img2.freepng.ru/20180504/phe/kisspng-professional-computer-icons-avatar-job-5aec571ec854c8.3222584415254382388206.jpg";
 
