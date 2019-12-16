@@ -63,3 +63,7 @@
     position: absolute;
     bottom: 0;
 }
+
+.input-avatar-hidden {
+    display: none;
+}

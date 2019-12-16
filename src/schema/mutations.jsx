@@ -111,6 +111,7 @@ export const updateUserMutation = gql`
     $lastName: String!
     $email: String!
     $about: String!
+    $avatar: Upload
   ) {
     updateUser(
       id: $id
@@ -118,12 +119,22 @@ export const updateUserMutation = gql`
       lastName: $lastName
       email: $email
       about: $about
+      avatar: $avatar
     ) {
       id
       firstName
       lastName
       email
       about
+      avatar
+    }
+  }
+`;
+
+export const uploadFileMutation = gql`
+  mutation ($file: Upload!) {
+    uploadFile(file: $file){
+      success
     }
   }
 `;
