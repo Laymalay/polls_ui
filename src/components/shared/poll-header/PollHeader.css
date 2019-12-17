@@ -42,6 +42,7 @@
     width: 150px;
     margin: 30px;
     z-index: 2;
+    border: solid white
 }
 
 .dash {
