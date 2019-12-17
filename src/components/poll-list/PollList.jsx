@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "react-apollo-hooks";
-import { Card, Button, CardColumns } from "react-bootstrap";
+import { Card, Button, CardColumns, Image } from "react-bootstrap";
 import { withRouter } from "react-router";
 
 import { getCurrentUserQuery } from "../../schema/queries";
@@ -10,6 +10,8 @@ import "./PollList.scss";
 const PollList = props => {
   const openPollView = pollId => props.history.push(`/pollView/${pollId}`);
   const polls = props.polls;
+  const defaultPollPic =
+    "https://www.petanos.com/wp-content/uploads/2019/08/Cute-Cat-whiskers-Animal-Eyes-Pink-background-Wallpaper.jpg";
 
   const {
     data: {
@@ -27,7 +29,17 @@ const PollList = props => {
             border="light"
             className="poll-card"
           >
-            <Card.Img variant="top" src={poll.imagePath} className="card-img" />
+            <Card.Img
+              variant="top"
+              onError={e => (e.target.src = defaultPollPic)}
+              src={poll.imagePath}
+              className="card-img"
+            />
+            <Image
+              className="poll-list-creator-pic"
+              roundedCircle
+              src={poll.creator.avatar}
+            />
             <Card.Body>
               <div className="poll-main">
                 <div>
