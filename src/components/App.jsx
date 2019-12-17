@@ -14,6 +14,8 @@ import Loading from "./shared/loading";
 import UserProfile from "./user-profile";
 import PrivateRoute from "./PrivateRoute";
 import PageNotFound from "./page-not-found";
+import UserList from "./user-list";
+import UserPage from "./user-page";
 
 const App = () => {
   const client = useApolloClient();
@@ -41,9 +43,11 @@ const App = () => {
         <PrivateRoute exact path="/" component={AllPolls} />
         <PrivateRoute path="/polls" component={AllPolls} />
         <PrivateRoute path="/pollview/:id" component={PollView} />
-        <PrivateRoute path="/userpolls" component={UserPolls} />
+        <PrivateRoute path="/userpolls/:id" component={UserPolls} />
         <PrivateRoute path="/userprofile" component={UserProfile} />
         <PrivateRoute path="/createpoll" component={CreatePoll} />
+        <PrivateRoute path="/users" component={UserList} />
+        <PrivateRoute path="/user/:id" component={UserPage} />
         <PrivateRoute component={PageNotFound} />
       </Switch>
     </Router>

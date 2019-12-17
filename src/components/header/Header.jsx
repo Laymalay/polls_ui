@@ -15,7 +15,7 @@ export const Header = props => {
 
   const {
     data: {
-      currentUser: { username, isStaff }
+      currentUser: { id, username, isStaff }
     }
   } = useQuery(
     getCurrentUserQuery,
@@ -38,11 +38,14 @@ export const Header = props => {
         <Link className="nav-link" to="/polls">
           All Polls
         </Link>
-        <Link className="nav-link" to="/userpolls">
+        <Link className="nav-link" to={`/userpolls/${id}`}>
           My Polls
         </Link>
+        <Link className="nav-link" to="/users">
+          Users
+        </Link>
         <Link className="nav-link" to="/test">
-          Test
+          NotFound
         </Link>
       </Nav>
 

@@ -3,13 +3,12 @@
 }
 
 .question-stat-content {
-    margin: 50px 0 50px 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     border-radius: 5px;
     padding: 15px;
-    margin: 10px 0;
+    margin: 20px 0;
     background-color: rgba(23, 163, 184, 0.05);
 }
 
@@ -17,16 +16,17 @@
     width: 500px;
 }
 
-.question-stat-choices{
+.question-stat-choices {
     width: 150px;
     padding: 10px;
     margin-right: 20px;
 }
-.wait-alert{
+
+.wait-alert {
     color: rgb(172, 172, 172);
-    
 }
-.line{
+
+.line {
     background-color: white;
     border-radius: 5px;
     padding: 5px;

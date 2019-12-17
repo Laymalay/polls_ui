@@ -8,6 +8,7 @@ export const getAllPollsQuery = gql`
       imagePath
       description
       creator {
+        avatar
         id
         username
       }
@@ -23,6 +24,7 @@ export const getPollQuery = gql`
       imagePath
       description
       creator {
+        avatar
         id
         username
       }
@@ -62,6 +64,7 @@ export const getPassedPollQuery = gql`
         imagePath
         description
         creator {
+          avatar
           username
         }
       }
@@ -144,3 +147,28 @@ export const getQuestionQuery = gql`
     }
   }
 `;
+
+export const getUsersQuery = gql `
+query users{
+  users{
+    id
+    username
+    firstName
+    lastName
+    avatar
+    about
+  }
+}`
+
+export const getUserQuery = gql `
+query user($id: Int!) {
+  user(id: $id) {
+    id
+    email
+    username
+    firstName
+    lastName
+    avatar
+    about
+  }
+}`

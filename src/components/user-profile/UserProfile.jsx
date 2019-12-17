@@ -1,7 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { withRouter, Link } from "react-router-dom";
-import { Form, Button, Col, Row, Alert } from "react-bootstrap";
+import { Form, Button, Col, Row, Alert, Image } from "react-bootstrap";
 import { zipWith } from "lodash";
 import { useApolloClient } from "@apollo/react-hooks";
 
@@ -14,9 +14,9 @@ import "./UserProfile.css";
 
 const UserProfile = ({ history }) => {
   const client = useApolloClient();
-  
+
   const defaultPic =
-    "https://img2.freepng.ru/20180504/phe/kisspng-professional-computer-icons-avatar-job-5aec571ec854c8.3222584415254382388206.jpg";
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6rgutjxxjJkzrNNuUjDHc1_0XWRBvvMRCAEWsT0MzVt3xjYf&s";
 
   const inputEl = useRef(null);
 
@@ -45,6 +45,7 @@ const UserProfile = ({ history }) => {
   ] = useMutation(updateUserMutation);
 
   const {
+    id,
     email: currentEmail,
     firstName: currentFirstName,
     lastName: currentLastName,
@@ -74,7 +75,7 @@ const UserProfile = ({ history }) => {
       email: email.length === 0,
       firstName: !firstName || firstName.length === 0,
       lastName: !lastName || lastName.length === 0,
-      about: !about
+      about: !about || about.length > 500
     };
   };
 
@@ -120,7 +121,7 @@ const UserProfile = ({ history }) => {
         }) => {
           setShowUpdateAlert(true);
           if (avatar) {
-            setAvatar(avatar)
+            setAvatar(avatar);
             client.writeData({
               data: {
                 currentUser: {
@@ -134,6 +135,12 @@ const UserProfile = ({ history }) => {
       )
       .catch(e => console.log(e));
   };
+
+  useEffect(() => {
+    if (!avatar) {
+      setAvatar(defaultPic);
+    }
+  }, [avatar]);
 
   if (loading || mutationLoading) return <Loading />;
   if (error || mutationError) return <>Error</>;
@@ -223,7 +230,7 @@ const UserProfile = ({ history }) => {
 
                 <div className="hr" />
 
-                <Link className="user-polls-link" to="/userpolls">
+                <Link className="user-polls-link" to={`/userpolls/${id}`}>
                   My polls
                 </Link>
               </div>

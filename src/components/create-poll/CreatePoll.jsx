@@ -62,7 +62,7 @@ export const CreatePoll = props => {
     color: "black",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   };
   const isCreateDisabled =
     Object.keys(errors).some(x => errors[x]) || questions.length <= 1;
