@@ -17,11 +17,11 @@ const UserPage = ({ history, match }) => {
     }
   });
 
-  useEffect(() => {
-    if (!avatar) {
-      setAvatar(defaultPic);
-    }
-  }, [avatar]);
+  useEffect(
+    () =>
+      user && user.avatar ? setAvatar(user.avatar) : setAvatar(defaultPic),
+    [user]
+  );
   const defaultPic =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6rgutjxxjJkzrNNuUjDHc1_0XWRBvvMRCAEWsT0MzVt3xjYf&s";
 
