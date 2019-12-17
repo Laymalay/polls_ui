@@ -29,6 +29,7 @@ const PassedPoll = ({ passedPollId, history, passRequest }) => {
     passedPoll && (
       <div className="main-content">
         <PollHeader
+          avatar={creator.avatar}
           imagePath={imagePath}
           title={title}
           username={creator.username}

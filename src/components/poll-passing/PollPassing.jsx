@@ -73,6 +73,7 @@ const PollPassing = ({ poll, passRequest }) => {
     <>
       <div className="main-content">
         <PollHeader
+          avatar={creator.avatar}
           imagePath={imagePath}
           title={title}
           username={creator.username}

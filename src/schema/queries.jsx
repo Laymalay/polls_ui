@@ -8,6 +8,7 @@ export const getAllPollsQuery = gql`
       imagePath
       description
       creator {
+        avatar
         id
         username
       }
@@ -23,6 +24,7 @@ export const getPollQuery = gql`
       imagePath
       description
       creator {
+        avatar
         id
         username
       }
@@ -62,6 +64,7 @@ export const getPassedPollQuery = gql`
         imagePath
         description
         creator {
+          avatar
           username
         }
       }
