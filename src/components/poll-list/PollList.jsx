@@ -8,19 +8,25 @@ import { getCurrentUserQuery } from "../../schema/queries";
 import "./PollList.scss";
 
 const PollList = props => {
-  const openPollView = pollId => props.history.push(`pollView/${pollId}`);
+  const openPollView = pollId => props.history.push(`/pollView/${pollId}`);
   const polls = props.polls;
+
   const {
     data: {
       currentUser: { username }
     }
   } = useQuery(getCurrentUserQuery);
-  
+
   return (
     <div>
       <CardColumns className="cards">
         {polls.map(poll => (
-          <Card key={poll.title} bg="light" border="info" className="poll-card">
+          <Card
+            key={poll.title}
+            bg="light"
+            border="light"
+            className="poll-card"
+          >
             <Card.Img variant="top" src={poll.imagePath} className="card-img" />
             <Card.Body>
               <div className="poll-main">

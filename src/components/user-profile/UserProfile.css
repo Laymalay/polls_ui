@@ -2,9 +2,10 @@
     width: 800px;
     margin: 0 auto;
     padding: 20px 20px 60px 20px;
-    background-color: rgba(23, 163, 184, 0.05);
+    background-color: rgba(23, 163, 184, 0.1);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    box-shadow: 0px 0px 25px -1px rgba(19, 66, 62, 0.2);
 }
 
 .user-about {
@@ -20,7 +21,7 @@
     height: 260px;
     width: 260px;
     border-radius: 50%;
-    border: solid #5bc0de;
+    border: solid white;
     margin-bottom: 20px;
 }
 

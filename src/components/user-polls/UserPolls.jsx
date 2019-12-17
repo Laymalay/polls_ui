@@ -2,27 +2,21 @@ import React from "react";
 import { useQuery } from "react-apollo-hooks";
 import { withRouter } from "react-router-dom";
 
-import { getAllPollsQuery, getCurrentUserQuery } from "../../schema/queries";
+import { getAllPollsQuery } from "../../schema/queries";
 import PollList from "../poll-list/PollList";
 import Loading from "../shared/loading";
 import AddButton from "../shared/add-button";
 
 import "./UserPolls.css";
 
-const UserPolls = props => {
-  const {
-    data: {
-      currentUser: { id: userId }
-    }
-  } = useQuery(getCurrentUserQuery);
-
+const UserPolls = ({ match, history }) => {  
   const {
     data: { allPolls: polls = {} } = {},
     loading: loadingPolls,
     error: errorPolls
-  } = useQuery(getAllPollsQuery, { variables: { creator: userId } });
+  } = useQuery(getAllPollsQuery, { variables: { creator: match.params.id } });
 
-  const addPoll = () => props.history.push("/createpoll");
+  const addPoll = () => history.push("/createpoll");
 
   if (loadingPolls) return <Loading />;
   if (errorPolls) return <>Error</>;
@@ -30,7 +24,7 @@ const UserPolls = props => {
   return (
     <>
       {polls.length === 0 ? (
-        <p className="no-polls-message">You don't have any polls</p>
+        <p className="no-polls-message">That user don't have any polls</p>
       ) : (
         <PollList polls={polls} />
       )}

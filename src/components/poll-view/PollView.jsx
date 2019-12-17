@@ -12,7 +12,6 @@ import PollStat from "../poll-stat";
 
 const PollView = ({ match, history }) => {
   const [passAgain, setPassAgain] = useState(false);
-
   const {
     data: {
       currentUser: { username }

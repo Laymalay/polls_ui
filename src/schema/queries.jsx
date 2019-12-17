@@ -144,3 +144,28 @@ export const getQuestionQuery = gql`
     }
   }
 `;
+
+export const getUsersQuery = gql `
+query users{
+  users{
+    id
+    username
+    firstName
+    lastName
+    avatar
+    about
+  }
+}`
+
+export const getUserQuery = gql `
+query user($id: Int!) {
+  user(id: $id) {
+    id
+    email
+    username
+    firstName
+    lastName
+    avatar
+    about
+  }
+}`

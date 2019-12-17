@@ -10,7 +10,6 @@ import PollHeader from "../shared/poll-header";
 import "./PassedPoll.scss";
 
 const PassedPoll = ({ passedPollId, history, passRequest }) => {
-  console.log(passedPollId);
   const { data: { passedPoll = {} } = {}, loading, error } = useQuery(
     getPassedPollQuery,
     {
