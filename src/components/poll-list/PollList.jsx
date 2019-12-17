@@ -12,13 +12,14 @@ const PollList = props => {
   const polls = props.polls;
   const defaultPollPic =
     "https://www.petanos.com/wp-content/uploads/2019/08/Cute-Cat-whiskers-Animal-Eyes-Pink-background-Wallpaper.jpg";
+  const defaultPic =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6rgutjxxjJkzrNNuUjDHc1_0XWRBvvMRCAEWsT0MzVt3xjYf&s";
 
   const {
     data: {
       currentUser: { username }
     }
   } = useQuery(getCurrentUserQuery);
-
   return (
     <div>
       <CardColumns className="cards">
@@ -35,11 +36,15 @@ const PollList = props => {
               src={poll.imagePath}
               className="card-img"
             />
-            <Image
-              className="poll-list-creator-pic"
-              roundedCircle
-              src={poll.creator.avatar}
-            />
+            {poll.creator.avatar && (
+              <Image
+                onError={e => (e.target.src = defaultPic)}
+                className="poll-list-creator-pic"
+                roundedCircle
+                src={poll.creator.avatar}
+              />
+            )}
+
             <Card.Body>
               <div className="poll-main">
                 <div>

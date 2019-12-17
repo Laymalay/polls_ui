@@ -13,6 +13,9 @@ const PollHeader = ({ imagePath, avatar, title, username, description }) => {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center"
   };
+  const defaultPic =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6rgutjxxjJkzrNNuUjDHc1_0XWRBvvMRCAEWsT0MzVt3xjYf&s";
+
 
   return (
     <>
@@ -21,8 +24,15 @@ const PollHeader = ({ imagePath, avatar, title, username, description }) => {
           <div className="poll-title">{title}</div>
           <div className="poll-creator">By {username}</div>
         </div>
-        <div className="dash"/>
-        <Image roundedCircle src={avatar} className="creator-pic" />
+        <div className="dash" />
+        {avatar && (
+          <Image
+            roundedCircle
+            src={avatar}
+            onError={(e) => e.target.src=defaultPic}
+            className="creator-pic"
+          />
+        )}
       </div>
       <div className="poll-desc">
         <i> {description}</i>
