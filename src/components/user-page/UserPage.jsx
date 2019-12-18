@@ -37,6 +37,7 @@ const UserPage = ({ history, match }) => {
         <div className="user-page-content">
           <div className="column-flex">
             <Row>
+              
               <Image
                 onError={() => setAvatar(defaultPic)}
                 alt="userpic"
