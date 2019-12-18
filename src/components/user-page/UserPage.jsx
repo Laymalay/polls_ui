@@ -6,6 +6,7 @@ import { Row, Image } from "react-bootstrap";
 import { getUserQuery } from "../../schema/queries";
 import Loading from "../shared/loading";
 import BackButton from "../shared/back-button";
+import { defaultPic } from "../shared/constants";
 
 import "./UserPage.css";
 
@@ -22,8 +23,6 @@ const UserPage = ({ history, match }) => {
       user && user.avatar ? setAvatar(user.avatar) : setAvatar(defaultPic),
     [user]
   );
-  const defaultPic =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6rgutjxxjJkzrNNuUjDHc1_0XWRBvvMRCAEWsT0MzVt3xjYf&s";
 
   if (loading) return <Loading />;
   if (error) return <>Error</>;
@@ -37,7 +36,6 @@ const UserPage = ({ history, match }) => {
         <div className="user-page-content">
           <div className="column-flex">
             <Row>
-              
               <Image
                 onError={() => setAvatar(defaultPic)}
                 alt="userpic"

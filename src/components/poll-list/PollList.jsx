@@ -4,16 +4,13 @@ import { Card, Button, CardColumns, Image } from "react-bootstrap";
 import { withRouter } from "react-router";
 
 import { getCurrentUserQuery } from "../../schema/queries";
+import { defaultPollPic, defaultPic } from "../shared/constants";
 
 import "./PollList.scss";
 
 const PollList = props => {
   const openPollView = pollId => props.history.push(`/pollView/${pollId}`);
   const polls = props.polls;
-  const defaultPollPic =
-    "https://www.petanos.com/wp-content/uploads/2019/08/Cute-Cat-whiskers-Animal-Eyes-Pink-background-Wallpaper.jpg";
-  const defaultPic =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6rgutjxxjJkzrNNuUjDHc1_0XWRBvvMRCAEWsT0MzVt3xjYf&s";
 
   const {
     data: {

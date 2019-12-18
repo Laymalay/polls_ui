@@ -1,6 +1,8 @@
 import React from "react";
 import { Image } from "react-bootstrap";
 
+import { defaultPic } from "../constants";
+
 import "./PollHeader.css";
 
 const PollHeader = ({ imagePath, avatar, title, username, description }) => {
@@ -13,9 +15,6 @@ const PollHeader = ({ imagePath, avatar, title, username, description }) => {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center"
   };
-  const defaultPic =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6rgutjxxjJkzrNNuUjDHc1_0XWRBvvMRCAEWsT0MzVt3xjYf&s";
-
 
   return (
     <>
@@ -29,7 +28,7 @@ const PollHeader = ({ imagePath, avatar, title, username, description }) => {
           <Image
             roundedCircle
             src={avatar}
-            onError={(e) => e.target.src=defaultPic}
+            onError={e => (e.target.src = defaultPic)}
             className="creator-pic"
           />
         )}

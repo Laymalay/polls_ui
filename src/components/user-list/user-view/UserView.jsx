@@ -3,12 +3,12 @@ import { withRouter } from "react-router";
 import { Image } from "react-bootstrap";
 import randomColor from "randomcolor";
 
+import { defaultPic } from "../../shared/constants";
+
 import "./UserView.css";
 
 const UserView = ({ history, user }) => {
   const [avatar, setAvatar] = useState(user.avatar);
-  const defaultPic =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6rgutjxxjJkzrNNuUjDHc1_0XWRBvvMRCAEWsT0MzVt3xjYf&s";
 
   useEffect(() => {
     if (!user.avatar) {

@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { withRouter, Link } from "react-router-dom";
-import { Form, Button, Col, Row, Alert, Image } from "react-bootstrap";
+import { Form, Button, Col, Row, Alert } from "react-bootstrap";
 import { zipWith } from "lodash";
 import { useApolloClient } from "@apollo/react-hooks";
 
 import { getCurrentUserQuery } from "../../schema/queries";
 import { updateUserMutation } from "../../schema/mutations";
+import { defaultPic } from "../shared/constants";
 import Loading from "../shared/loading";
 import BackButton from "../shared/back-button";
 
@@ -14,9 +15,6 @@ import "./UserProfile.css";
 
 const UserProfile = ({ history }) => {
   const client = useApolloClient();
-
-  const defaultPic =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6rgutjxxjJkzrNNuUjDHc1_0XWRBvvMRCAEWsT0MzVt3xjYf&s";
 
   const inputEl = useRef(null);
 
