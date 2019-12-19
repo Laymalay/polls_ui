@@ -10,7 +10,7 @@ import AddButton from "../shared/add-button";
 import "./AllPolls.css";
 
 const AllPolls = props => {
-  const { data, loading, error } = useQuery(getAllPollsQuery);
+  const { data, loading, error } = useQuery(getAllPollsQuery, {fetchPolicy: 'network-only'});
 
   if (loading) return <Loading />;
   if (error) return <>Error</>;

@@ -9,12 +9,15 @@ import AddButton from "../shared/add-button";
 
 import "./UserPolls.css";
 
-const UserPolls = ({ match, history }) => {  
+const UserPolls = ({ match, history }) => {
   const {
     data: { allPolls: polls = {} } = {},
     loading: loadingPolls,
     error: errorPolls
-  } = useQuery(getAllPollsQuery, { variables: { creator: match.params.id } });
+  } = useQuery(getAllPollsQuery, {
+    variables: { creator: match.params.id },
+    fetchPolicy: "network-only"
+  });
 
   const addPoll = () => history.push("/createpoll");
 

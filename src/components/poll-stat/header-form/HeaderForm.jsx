@@ -94,7 +94,7 @@ const HeaderForm = ({ poll }) => {
             <Form.Control
               as="textarea"
               size="lg"
-              rows="4" 
+              rows="4"
               defaultValue={description}
               placeholder="Super challenging poll description"
               onChange={e => setDescription(e.target.value)}
