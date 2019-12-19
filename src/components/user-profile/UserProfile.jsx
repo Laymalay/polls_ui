@@ -182,7 +182,7 @@ const UserProfile = ({ history }) => {
                   <Form.Label column sm="3">
                     Email
                   </Form.Label>
-                  <Col sm="9">
+                  <Col className="fixed-size">
                     <Form.Control
                       isInvalid={errors.email}
                       onChange={e => setEmail(e.target.value)}
@@ -198,7 +198,7 @@ const UserProfile = ({ history }) => {
                   <Form.Label column sm="3">
                     FirstName
                   </Form.Label>
-                  <Col sm="9">
+                  <Col  className="fixed-size">
                     <Form.Control
                       type="text"
                       required
@@ -214,7 +214,7 @@ const UserProfile = ({ history }) => {
                   <Form.Label column sm="3">
                     LastName
                   </Form.Label>
-                  <Col sm="9">
+                  <Col  className="fixed-size">
                     <Form.Control
                       required
                       type="text"

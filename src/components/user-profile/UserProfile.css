@@ -69,3 +69,6 @@
 .input-avatar-hidden {
     display: none;
 }
+.fixed-size{
+    width: 280px;
+}
