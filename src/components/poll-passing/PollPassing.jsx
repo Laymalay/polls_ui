@@ -2,14 +2,19 @@ import React, { useState, useMemo } from "react";
 import { useMutation } from "react-apollo";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
+import { createUseStyles } from "react-jss";
 
 import { pollPassedByUserQuery } from "../../schema/queries";
 import PollHeader from "../shared/poll-header";
 import { createPassedPollMutation } from "../../schema/mutations";
 
-import "./PollPassing.css";
+import styles from "./PollPassing.styles";
+
+const useStyles = createUseStyles(styles);
 
 const PollPassing = ({ poll, passRequest }) => {
+  const classes = useStyles();
+
   const [answers, setAnswers] = useState([]);
 
   const [passPoll] = useMutation(createPassedPollMutation, {
@@ -71,7 +76,7 @@ const PollPassing = ({ poll, passRequest }) => {
 
   return (
     <>
-      <div className="main-content">
+      <div className={classes.mainContent}>
         <PollHeader
           avatar={creator.avatar}
           imagePath={imagePath}
@@ -81,9 +86,9 @@ const PollPassing = ({ poll, passRequest }) => {
         />
         <Form onSubmit={handleSubmit}>
           <hr />
-          <div className="poll-questions-title">Questions:</div>
+          <div className={classes.pollQuestionTitle}>Questions:</div>
           {questions.map(question => (
-            <Form.Group key={question.id} className="question" as={Row}>
+            <Form.Group key={question.id} className={classes.question} as={Row}>
               <Form.Label as="legend" column sm={8}>
                 {question.title}
               </Form.Label>
@@ -105,7 +110,7 @@ const PollPassing = ({ poll, passRequest }) => {
           <Button
             size="lg"
             variant="outline-info"
-            className="send-btn bottom-button"
+            className={classes.sendBtn}
             disabled={!ifFormValid}
             type="submit"
           >

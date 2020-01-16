@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMutation, useQuery } from "react-apollo-hooks";
 import { withRouter } from "react-router";
 import { Form, Button, Col } from "react-bootstrap";
+import { createUseStyles } from "react-jss";
 
 import {
   createPollMutation,
@@ -13,13 +14,17 @@ import Question from "../question";
 import BackButton from "../shared/back-button";
 import { defaultPollPic } from "../shared/constants";
 
-import "./CreatePoll.css";
+import styles from "./CreatePoll.styles";
+
+const useStyles = createUseStyles(styles);
 
 export const CreatePoll = props => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState([{}]);
   const [imagePath, setImagePath] = useState(defaultPollPic);
+
+  const classes = useStyles({ imagePath });
 
   const validateForm = () => {
     return {
@@ -49,21 +54,6 @@ export const CreatePoll = props => {
   const [createQuestion] = useMutation(createQuestionMutation);
   const [createChoice] = useMutation(createChoiceMutation);
 
-  const headerStyle = {
-    backgroundImage: `url(${imagePath})`,
-    backgroundColor: "rgba(23, 163, 184, 0.2)",
-    padding: 10,
-    backgroundSize: "100% 100%",
-    backgroundRepeat: "repeat",
-    backgroundPosition: "center center",
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-    height: 400,
-    color: "black",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between"
-  };
   const isCreateDisabled =
     Object.keys(errors).some(x => errors[x]) || questions.length <= 1;
 
@@ -113,10 +103,10 @@ export const CreatePoll = props => {
   };
 
   return (
-    <Form className="create-form">
+    <Form className={classes.createForm}>
       <BackButton onClick={() => props.history.push("/polls")} />
-      <div style={headerStyle}>
-        <Form.Row className="first-line">
+      <div className={classes.headerStyle}>
+        <Form.Row className={classes.firstLine}>
           <Form.Group as={Col} md="3">
             <Form.Control
               type="text"
@@ -136,7 +126,7 @@ export const CreatePoll = props => {
             />
           </Form.Group>
 
-          <Form.Label column md="1" className="creator">
+          <Form.Label column md="1" className={classes.creator}>
             Creator:
           </Form.Label>
           <Form.Group as={Col} md="2">
@@ -150,14 +140,16 @@ export const CreatePoll = props => {
             rows="4"
             isInvalid={errors.description}
             isValid={!errors.description}
-            className="description"
+            className={classes.description}
             placeholder="Super challenging poll description"
             onChange={e => setDescription(e.target.value)}
           />
         </Form.Group>
       </div>
       <Form.Group>
-        <Form.Label className="poll-questions-title">Questions:</Form.Label>
+        <Form.Label className={classes.pollQuestionsTitle}>
+          Questions:
+        </Form.Label>
         {questions.map((question, index) => (
           <Question
             key={index}
@@ -171,7 +163,7 @@ export const CreatePoll = props => {
         size="lg"
         variant="outline-info"
         block
-        className="create-poll-btn bottom-button"
+        className={classes.createPollBtn}
         disabled={isCreateDisabled}
         type="button"
         onClick={handleSubmit}

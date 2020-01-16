@@ -10,14 +10,20 @@ import {
 import { withRouter } from "react-router";
 import { useMutation } from "react-apollo-hooks";
 import { useLazyQuery, useApolloClient } from "@apollo/react-hooks";
+import { createUseStyles } from "react-jss";
 
 import { AUTH_TOKEN } from "../../constants";
 import { loginMutation, signupMutation } from "../../schema/mutations";
 import { meQuery } from "../../schema/queries";
 import Loading from "../shared/loading";
 
-import "./Login.css";
+import styles from "./Login.styles";
+
+const useStyles = createUseStyles(styles);
+
 const Login = ({ history }) => {
+  const classes = useStyles();
+
   const client = useApolloClient();
 
   const [showAlert, setShowAlert] = useState(false);
@@ -31,7 +37,7 @@ const Login = ({ history }) => {
 
   const [login] = useMutation(loginMutation);
   const [signUp] = useMutation(signupMutation);
-  
+
   const [getMe, { loadingUser, data }] = useLazyQuery(meQuery, {
     fetchPolicy: "network-only"
   });
@@ -89,13 +95,13 @@ const Login = ({ history }) => {
 
   return (
     <>
-      <Form className="login-form" onSubmit={handleSubmit}>
+      <Form className={classes.loginForm} onSubmit={handleSubmit}>
         {!isLogin && (
           <FormGroup controlId="email">
             <FormLabel>Email</FormLabel>
             <FormControl
               autoFocus
-              className="login-form-control"
+              className={classes.loginFormControl}
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
@@ -105,7 +111,7 @@ const Login = ({ history }) => {
         <FormGroup controlId="username">
           <FormLabel>Username</FormLabel>
           <FormControl
-            className="login-form-control"
+            className={classes.loginFormControl}
             autoFocus
             type="username"
             value={username}
@@ -115,7 +121,7 @@ const Login = ({ history }) => {
         <FormGroup controlId="password">
           <FormLabel>Password</FormLabel>
           <FormControl
-            className="login-form-control"
+            className={classes.loginFormControl}
             value={password}
             onChange={e => setPassword(e.target.value)}
             type="password"
@@ -124,7 +130,7 @@ const Login = ({ history }) => {
         <Button
           variant="info"
           block
-          className="action-btn"
+          className={classes.actionBtn}
           size="lg"
           disabled={!validateForm()}
           type="submit"
@@ -141,7 +147,7 @@ const Login = ({ history }) => {
       </Form>
       {showAlert && (
         <Alert
-          className="alert-login-error"
+          className={classes.alertLoginError}
           variant="danger"
           onClose={() => setShowAlert(false)}
           dismissible

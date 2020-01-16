@@ -3,14 +3,19 @@ import { useQuery } from "react-apollo-hooks";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import { useApolloClient } from "@apollo/react-hooks";
+import { createUseStyles } from "react-jss";
 
 import { getCurrentUserQuery } from "../../schema/queries";
 import { AUTH_TOKEN } from "../../constants";
 import { Navbar, Nav } from "react-bootstrap";
 
-import "./Header.css";
+import styles from "./Header.styles";
+
+const useStyles = createUseStyles(styles);
 
 export const Header = props => {
+  const classes = useStyles();
+
   const client = useApolloClient();
 
   const {
@@ -28,23 +33,23 @@ export const Header = props => {
   };
 
   return (
-    <Navbar sticky="top" variant="dark">
-      <Navbar.Brand className="navbar-title">
-        <Link className="navbar-title" to="/polls">
+    <Navbar sticky="top" variant="dark" className={classes.navbar}>
+      <Navbar.Brand className={classes.navbarTitle}>
+        <Link className={classes.navbarTitle} to="/polls">
           PollPool
         </Link>
       </Navbar.Brand>
       <Nav className="mr-auto">
-        <Link className="nav-link" to="/polls">
+        <Link className={classes.navLink} to="/polls">
           All Polls
         </Link>
-        <Link className="nav-link" to={`/userpolls/${id}`}>
+        <Link className={classes.navLink} to={`/userpolls/${id}`}>
           My Polls
         </Link>
-        <Link className="nav-link" to="/users">
+        <Link className={classes.navLink} to="/users">
           Users
         </Link>
-        <Link className="nav-link" to="/test">
+        <Link className={classes.navLink} to="/test">
           NotFound
         </Link>
       </Nav>
@@ -53,13 +58,13 @@ export const Header = props => {
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
             Signed in as: &nbsp;
-            <Link className="user-link" to="/userprofile">
+            <Link className={classes.userLink} to="/userprofile">
               {username}
             </Link>
           </Navbar.Text>
           {isStaff && (
             <a
-              className="settings-link"
+              className={classes.settingsLink}
               href={`${process.env.REACT_APP_API_URL}/admin`}
               target="_blank"
               rel="noopener noreferrer"
@@ -70,7 +75,7 @@ export const Header = props => {
         </Navbar.Collapse>
       )}
 
-      <Link onClick={logout} className="nav-link" to="/login">
+      <Link onClick={logout} className={classes.navLink} to="/login">
         Logout
       </Link>
     </Navbar>
