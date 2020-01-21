@@ -22,7 +22,7 @@ const style = {
     marginBottom: 20
   },
   headerStyle: {
-    backgroundImage: ({imagePath})=>`url(${imagePath})`,
+    backgroundImage: ({ imagePath }) => `url(${imagePath})`,
     backgroundColor: "rgba(23, 163, 184, 0.2)",
     padding: 10,
     backgroundSize: "100% 100%",

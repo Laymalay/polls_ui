@@ -3,13 +3,18 @@ import PieChart from "react-minimal-pie-chart";
 import { useQuery } from "react-apollo";
 import { Row } from "react-bootstrap";
 import randomColor from "randomcolor";
+import { createUseStyles } from "react-jss";
 
 import { getQuestionQuery } from "../../../schema/queries";
 import Loading from "../../shared/loading";
 
-import "./QuestionStat.css";
+import styles from "./QuestionStat.styles";
+
+const useStyles = createUseStyles(styles);
 
 const QuestionStat = ({ question: { id } }) => {
+  const classes = useStyles();
+
   const { data: { question } = {}, loading, error } = useQuery(
     getQuestionQuery,
     {
@@ -43,7 +48,7 @@ const QuestionStat = ({ question: { id } }) => {
   const statView = () => {
     return answeredQuestions.length > 0 ? (
       <PieChart
-        className="question-chart"
+        className={classes.questionChart}
         animate
         label
         labelPosition={50}
@@ -55,7 +60,7 @@ const QuestionStat = ({ question: { id } }) => {
         data={Object.values(stat).filter(({ value }) => value !== 0)}
       />
     ) : (
-      <p className="wait-alert">waiting for answers</p>
+      <p className={classes.waitAlert}>waiting for answers</p>
     );
   };
 
@@ -64,12 +69,12 @@ const QuestionStat = ({ question: { id } }) => {
   });
 
   return (
-    <div className="question-stat-content">
-      <p className="question-stat-title">{question.title}</p>
+    <div className={classes.questionStatContent}>
+      <p className={classes.questionStatTitle}>{question.title}</p>
 
-      <div className="question-stat-choices">
+      <div className={classes.questionStatChoices}>
         {Object.values(stat).map(({ title, color }) => (
-          <Row key={title} className="row-flex line">
+          <Row key={title} className={classes.line}>
             <div>
               <span style={{ color }} className="oi oi-media-record"></span>
               &nbsp;
