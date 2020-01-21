@@ -4,6 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 import { Form, Button, Col, Row, Alert } from "react-bootstrap";
 import { zipWith } from "lodash";
 import { useApolloClient } from "@apollo/react-hooks";
+import { createUseStyles } from "react-jss";
 
 import { getCurrentUserQuery } from "../../schema/queries";
 import { updateUserMutation } from "../../schema/mutations";
@@ -11,9 +12,13 @@ import { defaultPic } from "../shared/constants";
 import Loading from "../shared/loading";
 import BackButton from "../shared/back-button";
 
-import "./UserProfile.css";
+import styles from "./UserProfile.styles";
+
+const useStyles = createUseStyles(styles);
 
 const UserProfile = ({ history }) => {
+  const classes = useStyles();
+
   const client = useApolloClient();
 
   const inputEl = useRef(null);
@@ -148,15 +153,15 @@ const UserProfile = ({ history }) => {
       <BackButton onClick={() => history.push("/polls")} />
 
       <Form onSubmit={handleSubmit}>
-        <div className="user-content">
-          <div className="column-flex">
-            <div className="row-flex">
-              <div className="column-flex">
+        <div className={classes.userContent}>
+          <div className={classes.columnFlex}>
+            <div className={classes.rowFlex}>
+              <div className={classes.columnFlex}>
                 <img
                   id="avatar"
                   onError={() => setAvatar(defaultPic)}
                   alt="userpic"
-                  className="user-pic"
+                  className={classes.userPic}
                   src={avatar}
                 />
 
@@ -164,11 +169,11 @@ const UserProfile = ({ history }) => {
                   onChange={e => handleFileUpload(e.target.files)}
                   type="file"
                   ref={inputEl}
-                  className="input-avatar-hidden"
+                  className={classes.inputAvatarHidden}
                 />
 
                 <Button
-                  className="change-user-photo-btn"
+                  className={classes.changeUserPhotoBtn}
                   variant="outline-info"
                   onClick={() => inputEl.current.click()}
                 >
@@ -176,13 +181,13 @@ const UserProfile = ({ history }) => {
                 </Button>
               </div>
 
-              <div className="main-user-info">
-                <div className="username">{currentUser.username}</div>
+              <div className={classes.mainUserInfo}>
+                <div className={classes.username}>{currentUser.username}</div>
                 <Form.Group as={Row} controlId="userForm.email">
                   <Form.Label column sm="3">
                     Email
                   </Form.Label>
-                  <Col className="fixed-size">
+                  <Col className={classes.fixedSize}>
                     <Form.Control
                       isInvalid={errors.email}
                       onChange={e => setEmail(e.target.value)}
@@ -198,7 +203,7 @@ const UserProfile = ({ history }) => {
                   <Form.Label column sm="3">
                     FirstName
                   </Form.Label>
-                  <Col  className="fixed-size">
+                  <Col className={classes.fixedSize}>
                     <Form.Control
                       type="text"
                       required
@@ -214,7 +219,7 @@ const UserProfile = ({ history }) => {
                   <Form.Label column sm="3">
                     LastName
                   </Form.Label>
-                  <Col  className="fixed-size">
+                  <Col className={classes.fixedSize}>
                     <Form.Control
                       required
                       type="text"
@@ -226,20 +231,23 @@ const UserProfile = ({ history }) => {
                   </Col>
                 </Form.Group>
 
-                <div className="hr" />
+                <div className={classes.hr} />
 
-                <Link className="user-polls-link" to={`/userpolls/${id}`}>
+                <Link className={classes.userPollsLink} to={`/userpolls/${id}`}>
                   My polls
                 </Link>
               </div>
             </div>
 
-            <Form.Group className="user-about" controlId="userForm.about">
+            <Form.Group
+              className={classes.userAbout}
+              controlId="userForm.about"
+            >
               <Form.Label>About</Form.Label>
               <Form.Control
                 required
                 onChange={e => setAbout(e.target.value)}
-                className="sized-textarea"
+                className={classes.sizedTextarea}
                 as="textarea"
                 isInvalid={errors.about}
                 rows="3"
@@ -251,7 +259,7 @@ const UserProfile = ({ history }) => {
 
           <Button
             disabled={isUpdateDisabled}
-            className="update-user-btn"
+            className={classes.updateUserBtn}
             type="submit"
             size="lg"
             variant="outline-info"
@@ -266,7 +274,7 @@ const UserProfile = ({ history }) => {
           variant={"success"}
           onClose={() => setShowUpdateAlert(false)}
           dismissible
-          className="update-success-alert"
+          className={classes.updateSuccessAlert}
         >
           User info successfully updated
         </Alert>

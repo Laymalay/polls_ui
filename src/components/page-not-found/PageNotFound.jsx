@@ -1,10 +1,15 @@
 import React from "react";
+import { createUseStyles } from "react-jss";
 
-import "./PageNotFound.css";
+import styles from "./PageNotFound.styles";
+
+const useStyles = createUseStyles(styles);
 
 const PageNotFound = () => {
+  const classes = useStyles();
+
   return (
-    <div className="page-not-found">
+    <div className={classes.pageNotFound}>
       <h2>Page not found</h2>
     </div>
   );

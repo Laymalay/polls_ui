@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
+import { createUseStyles } from "react-jss";
 
-import "./Question.scss";
+import styles from "./Question.styles";
+
+const useStyles = createUseStyles(styles);
 
 export const Question = ({ question, updateQuestions }) => {
+  const classes = useStyles();
+
   const { title = "", choices = ["", "", ""], answer = "" } = question;
 
   const [questionTitle, setQuestionTitle] = useState(title);
@@ -32,12 +37,18 @@ export const Question = ({ question, updateQuestions }) => {
   }, [enableAnswer, answer, questionChoices]);
 
   return (
-    <div className={`question-form-${formType}`}>
+    <div
+      className={
+        formType === "create"
+          ? classes.questionFormCreate
+          : classes.questionFormView
+      }
+    >
       <Row>
         <Col>
           <Form.Label>Title:</Form.Label>
           <Form.Control
-            className="question-title"
+            className={classes.questionTitle}
             as="textarea"
             size="sm"
             disabled={formType === "view"}
@@ -51,7 +62,7 @@ export const Question = ({ question, updateQuestions }) => {
             <Form.Control
               key={`${choice} ${index}`}
               size="sm"
-              className="choice"
+              className={classes.choice}
               type="text"
               disabled={formType === "view"}
               placeholder={`choice ${index}`}
@@ -66,7 +77,7 @@ export const Question = ({ question, updateQuestions }) => {
             as="select"
             disabled={formType === "view"}
             size="sm"
-            className="choice"
+            className={classes.choice}
           >
             <option>closed</option>
             <option disabled>open</option>
@@ -90,7 +101,7 @@ export const Question = ({ question, updateQuestions }) => {
 
           {formType === "create" && (
             <Button
-              className="add-btn"
+              className={classes.addBtn}
               variant="outline-info"
               block
               disabled={!validForm}

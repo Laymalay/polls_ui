@@ -1,39 +1,34 @@
 import React from "react";
 import { Image } from "react-bootstrap";
+import { createUseStyles } from "react-jss";
 
 import { defaultPic } from "../constants";
 
-import "./PollHeader.css";
+import styles from "./PollHeader.styles";
+
+const useStyles = createUseStyles(styles);
 
 const PollHeader = ({ imagePath, avatar, title, username, description }) => {
-  const headerImage = {
-    backgroundImage: `url(${imagePath})`,
-    backgroundColor: "rgba(23, 163, 184, 0.2)",
-    borderRadius: 5,
-    height: 400,
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center center"
-  };
+  const classes = useStyles({ imagePath });
 
   return (
     <>
-      <div className="poll-header" style={headerImage}>
-        <div className="poll-shadow">
-          <div className="poll-title">{title}</div>
-          <div className="poll-creator">By {username}</div>
+      <div className={classes.pollHeader}>
+        <div className={classes.pollShadow}>
+          <div className={classes.pollTitle}>{title}</div>
+          <div className={classes.pollCreator}>By {username}</div>
         </div>
-        <div className="dash" />
+        <div className={classes.dash} />
         {avatar && (
           <Image
             roundedCircle
             src={avatar}
             onError={e => (e.target.src = defaultPic)}
-            className="creator-pic"
+            className={classes.creatorPic}
           />
         )}
       </div>
-      <div className="poll-desc">
+      <div className={classes.pollDesc}>
         <i> {description}</i>
       </div>
     </>

@@ -3,13 +3,18 @@ import { useQuery } from "react-apollo-hooks";
 import { withRouter } from "react-router";
 import { Image } from "react-bootstrap";
 import randomColor from "randomcolor";
+import { createUseStyles } from "react-jss";
 
 import { defaultPic } from "../../shared/constants";
 import { getCurrentUserQuery } from "../../../schema/queries";
 
-import "./UserView.css";
+import styles from "./UserView.styles";
+
+const useStyles = createUseStyles(styles);
 
 const UserView = ({ history, user }) => {
+  const classes = useStyles();
+
   const [avatar, setAvatar] = useState(user.avatar);
   const { data: { currentUser } = {} } = useQuery(getCurrentUserQuery);
 
@@ -36,18 +41,18 @@ const UserView = ({ history, user }) => {
   return (
     <div
       style={{ backgroundColor: userColor }}
-      className="user-view-block row-flex"
+      className={classes.userViewBlock}
       onClick={showUserPage}
     >
       <Image
         alt="userpic"
         onError={() => setAvatar(defaultPic)}
         roundedCircle
-        className="user-view-pic"
+        className={classes.userViewPic}
         src={avatar}
       />
       <div>
-        <h2 className="user-view-username">{user.username}</h2>
+        <h2 className={classes.userViewUsername}>{user.username}</h2>
         <h5>
           {user.firstName} {user.lastName}
         </h5>

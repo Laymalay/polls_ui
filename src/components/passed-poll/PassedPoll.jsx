@@ -2,14 +2,19 @@ import React from "react";
 import { Button, Row, Form, Col } from "react-bootstrap";
 import { withRouter } from "react-router";
 import { useQuery } from "react-apollo";
+import { createUseStyles } from "react-jss";
 
 import { getPassedPollQuery } from "../../schema/queries";
 import Loading from "../shared/loading";
 import PollHeader from "../shared/poll-header";
 
-import "./PassedPoll.scss";
+import styles from "./PassedPoll.styles";
+
+const useStyles = createUseStyles(styles);
 
 const PassedPoll = ({ passedPollId, history, passRequest }) => {
+  const classes = useStyles();
+
   const { data: { passedPoll = {} } = {}, loading, error } = useQuery(
     getPassedPollQuery,
     {
@@ -27,7 +32,7 @@ const PassedPoll = ({ passedPollId, history, passRequest }) => {
 
   return (
     passedPoll && (
-      <div className="main-content">
+      <div className={classes.mainContent}>
         <PollHeader
           avatar={creator.avatar}
           imagePath={imagePath}
@@ -35,15 +40,14 @@ const PassedPoll = ({ passedPollId, history, passRequest }) => {
           username={creator.username}
           description={description}
         />
-        <p className="passed-poll-score">
+        <p className={classes.passedPollScore}>
           Score: <b>{score * 100}%</b>{" "}
         </p>
         {answers.map(answer => {
-          const style = answer.correct ? "correct" : "wrong";
           return (
             <div
               key={answer.question.title}
-              className={`answer ${style}`}
+              className={answer.correct ? classes.correct : classes.wrong}
               as={Row}
             >
               <Form.Label as="legend" column sm={5}>
@@ -71,7 +75,7 @@ const PassedPoll = ({ passedPollId, history, passRequest }) => {
         <Button
           size="lg"
           variant="outline-info"
-          className="pass-again-btn"
+          className={classes.passAgainBtn}
           onClick={() => passRequest(true)}
         >
           Pass again

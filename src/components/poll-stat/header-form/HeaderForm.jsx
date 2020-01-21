@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import { useMutation } from "react-apollo-hooks";
 import { Form, Button } from "react-bootstrap";
 import { zipWith } from "lodash";
+import { createUseStyles } from "react-jss";
+
 import { updatePollMutation } from "../../../schema/mutations";
 
-import "./HeaderForm.css";
+import styles from "./HeaderForm.styles";
+
+const useStyles = createUseStyles(styles);
 
 const HeaderForm = ({ poll }) => {
   const [title, setTitle] = useState(poll.title);
   const [description, setDescription] = useState(poll.description);
   const [imagePath, setImagePath] = useState(poll.imagePath);
+
+  const classes = useStyles({ imagePath });
 
   const [updatePoll] = useMutation(updatePollMutation);
 
@@ -44,26 +50,14 @@ const HeaderForm = ({ poll }) => {
   const isUpdateDisabled =
     Object.keys(errors).some(x => errors[x]) || !wasChanged;
 
-  const headerImage = {
-    backgroundImage: `url(${imagePath})`,
-    borderRadius: 5,
-    height: 400,
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center center",
-    overflow: "hidden",
-    marginTop: "-10px"
-  };
-
   return (
     <Form onSubmit={handleSubmit}>
-      <div style={headerImage}></div>
-      <div className="header-form-content">
-        <div className="row-flex">
+      <div className={classes.headerFormContent}>
+        <div className={classes.rowFlex}>
           <Form.Group>
             <Form.Control
               type="text"
-              className="poll-stat-title"
+              className={classes.pollStatTitle}
               defaultValue={title}
               placeholder="Title"
               onChange={e => setTitle(e.target.value)}
@@ -72,7 +66,7 @@ const HeaderForm = ({ poll }) => {
           <Button
             type="submit"
             disabled={isUpdateDisabled}
-            className="update-poll-btn"
+            className={classes.updatePollBtn}
             size="lg"
             variant="light"
           >
