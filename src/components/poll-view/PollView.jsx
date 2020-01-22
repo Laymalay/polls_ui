@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "react-apollo";
 import { withRouter } from "react-router";
+import { useLazyQuery } from "@apollo/react-hooks";
 
 import { pollPassedByUserQuery, getPollQuery } from "../../schema/queries";
 import Loading from "../shared/loading";
@@ -11,7 +12,7 @@ import { getCurrentUserQuery } from "../../schema/queries";
 import PollStat from "../poll-stat";
 
 const PollView = ({ match, history }) => {
-  const [passAgain, setPassAgain] = useState(false);
+  const [passAgain, setPassAgain] = useState(undefined);
   const {
     data: {
       currentUser: { username }
@@ -23,15 +24,20 @@ const PollView = ({ match, history }) => {
       id: match.params.id
     }
   });
+  
+  const [
+    getPollPassedByUser,
+    { loading, data: { pollPassedByUser = {} } = {}, error }
+  ] = useLazyQuery(pollPassedByUserQuery, {
+    variables: {
+      poll: match.params.id
+    },
+    fetchPolicy: "network-only"
+  });
 
-  const { data: { pollPassedByUser = {} } = {}, loading, error } = useQuery(
-    pollPassedByUserQuery,
-    {
-      variables: {
-        poll: match.params.id
-      }
-    }
-  );
+  useEffect(() => {
+    getPollPassedByUser();
+  }, [getPollPassedByUser, passAgain]);
 
   const loadPollView = () => {
     if (poll.creator.username === username) {
