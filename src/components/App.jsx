@@ -1,7 +1,6 @@
 import React from "react";
 import { useQuery } from "react-apollo-hooks";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useApolloClient } from "@apollo/react-hooks";
 
 import { meQuery, isUserLoggedInQuery } from "../schema/queries";
 import CreatePoll from "./create-poll";
@@ -18,7 +17,6 @@ import UserList from "./user-list";
 import UserPage from "./user-page";
 
 const App = () => {
-  const client = useApolloClient();
 
   const { data: { isLoggedIn } = false } = useQuery(isUserLoggedInQuery);
 
@@ -29,9 +27,7 @@ const App = () => {
 
   if (loading) return <Loading />;
 
-  if (me) {
-    client.writeData({ data: { currentUser: me } });
-  }
+
 
   return (
     <Router>

@@ -104,22 +104,6 @@ export const isUserLoggedInQuery = gql`
   }
 `;
 
-export const getCurrentUserQuery = gql`
-  query getCurrentUserQuery {
-    currentUser @client {
-      id
-      username
-      email
-      firstName
-      lastName
-      about
-      avatar
-      isStaff
-      __typename
-    }
-  }
-`;
-
 export const getQuestionQuery = gql`
   query question($id: Int!) {
     question(id: $id) {
@@ -148,27 +132,29 @@ export const getQuestionQuery = gql`
   }
 `;
 
-export const getUsersQuery = gql `
-query users{
-  users{
-    id
-    username
-    firstName
-    lastName
-    avatar
-    about
+export const getUsersQuery = gql`
+  query users {
+    users {
+      id
+      username
+      firstName
+      lastName
+      avatar
+      about
+    }
   }
-}`
+`;
 
-export const getUserQuery = gql `
-query user($id: Int!) {
-  user(id: $id) {
-    id
-    email
-    username
-    firstName
-    lastName
-    avatar
-    about
+export const getUserQuery = gql`
+  query user($id: Int!) {
+    user(id: $id) {
+      id
+      email
+      username
+      firstName
+      lastName
+      avatar
+      about
+    }
   }
-}`
+`;

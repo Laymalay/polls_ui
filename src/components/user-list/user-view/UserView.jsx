@@ -6,7 +6,7 @@ import randomColor from "randomcolor";
 import { createUseStyles } from "react-jss";
 
 import { defaultPic } from "../../shared/constants";
-import { getCurrentUserQuery } from "../../../schema/queries";
+import { meQuery } from "../../../schema/queries";
 
 import styles from "./UserView.styles";
 
@@ -16,7 +16,7 @@ const UserView = ({ history, user }) => {
   const classes = useStyles();
 
   const [avatar, setAvatar] = useState(user.avatar);
-  const { data: { currentUser } = {} } = useQuery(getCurrentUserQuery);
+  const { data: { me } = {} } = useQuery(meQuery);
 
   useEffect(() => {
     if (!user.avatar) {
@@ -25,7 +25,7 @@ const UserView = ({ history, user }) => {
   }, [user.avatar]);
 
   const showUserPage = () => {
-    if (currentUser && currentUser.id === user.id) {
+    if (me && me.id === user.id) {
       return history.push("/userprofile");
     }
     history.push(`user/${user.id}`);

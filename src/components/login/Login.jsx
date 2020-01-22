@@ -45,7 +45,7 @@ const Login = ({ history }) => {
   if (loadingUser) return <Loading />;
 
   if (data && data.me) {
-    client.writeData({ data: { isLoggedIn: true, currentUser: data.me } });
+    client.writeData({ data: { isLoggedIn: true} });
     history.push("/polls");
   }
 

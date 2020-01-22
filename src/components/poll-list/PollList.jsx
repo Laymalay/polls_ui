@@ -4,7 +4,7 @@ import { Card, Button, CardColumns, Image } from "react-bootstrap";
 import { withRouter } from "react-router";
 import { createUseStyles } from "react-jss";
 
-import { getCurrentUserQuery } from "../../schema/queries";
+import {  meQuery } from "../../schema/queries";
 import { defaultPollPic, defaultPic } from "../shared/constants";
 
 import styles from "./PollList.styles";
@@ -19,9 +19,10 @@ const PollList = props => {
 
   const {
     data: {
-      currentUser: { username }
+      me: { username }
     }
-  } = useQuery(getCurrentUserQuery);
+  } = useQuery(meQuery);
+  
   return (
     <div>
       <CardColumns className={classes.cards}>
