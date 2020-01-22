@@ -38,8 +38,7 @@ const UserProfile = ({ history }) => {
   };
 
   const { data: { currentUser } = {}, loading, error } = useQuery(
-    getCurrentUserQuery,
-    { pollInterval: 500 } // get correct user after cache updated and logout/login actions
+    getCurrentUserQuery
   );
 
   const [

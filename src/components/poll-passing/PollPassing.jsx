@@ -4,7 +4,6 @@ import { Form, Row, Col, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 import { createUseStyles } from "react-jss";
 
-import { pollPassedByUserQuery } from "../../schema/queries";
 import PollHeader from "../shared/poll-header";
 import { createPassedPollMutation } from "../../schema/mutations";
 
@@ -17,26 +16,7 @@ const PollPassing = ({ poll, passRequest }) => {
 
   const [answers, setAnswers] = useState([]);
 
-  const [passPoll] = useMutation(createPassedPollMutation, {
-    update(cache, { data: { createPassedPoll } }) {
-      const { pollPassedByUser } = cache.readQuery({
-        query: pollPassedByUserQuery,
-        variables: { poll: poll.id }
-      });
-
-      cache.writeQuery({
-        query: pollPassedByUserQuery,
-        data: {
-          pollPassedByUser: {
-            ...pollPassedByUser,
-            __typename: "PassedPollType",
-            id: createPassedPoll.id
-          }
-        },
-        variables: { poll: poll.id }
-      });
-    }
-  });
+  const [passPoll] = useMutation(createPassedPollMutation);
 
   useMemo(() => {
     if (poll.questions) {

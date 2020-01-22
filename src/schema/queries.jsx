@@ -75,9 +75,9 @@ export const getPassedPollQuery = gql`
   }
 `;
 
-export const meQuery = gql`
-  query me {
-    me {
+export const getCurrentUserQuery = gql`
+  query currentUser {
+    currentUser {
       id
       username
       email
@@ -101,22 +101,6 @@ export const pollPassedByUserQuery = gql`
 export const isUserLoggedInQuery = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
-  }
-`;
-
-export const getCurrentUserQuery = gql`
-  query getCurrentUserQuery {
-    currentUser @client {
-      id
-      username
-      email
-      firstName
-      lastName
-      about
-      avatar
-      isStaff
-      __typename
-    }
   }
 `;
 
@@ -148,27 +132,29 @@ export const getQuestionQuery = gql`
   }
 `;
 
-export const getUsersQuery = gql `
-query users{
-  users{
-    id
-    username
-    firstName
-    lastName
-    avatar
-    about
+export const getUsersQuery = gql`
+  query users {
+    users {
+      id
+      username
+      firstName
+      lastName
+      avatar
+      about
+    }
   }
-}`
+`;
 
-export const getUserQuery = gql `
-query user($id: Int!) {
-  user(id: $id) {
-    id
-    email
-    username
-    firstName
-    lastName
-    avatar
-    about
+export const getUserQuery = gql`
+  query user($id: Int!) {
+    user(id: $id) {
+      id
+      email
+      username
+      firstName
+      lastName
+      avatar
+      about
+    }
   }
-}`
+`;

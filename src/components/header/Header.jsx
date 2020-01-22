@@ -22,10 +22,7 @@ export const Header = props => {
     data: {
       currentUser: { id, username, isStaff }
     }
-  } = useQuery(
-    getCurrentUserQuery,
-    { pollInterval: 500 } // get user after cache updated
-  );
+  } = useQuery(getCurrentUserQuery);
 
   const logout = () => {
     localStorage.removeItem(AUTH_TOKEN);
