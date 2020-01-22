@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useApolloClient } from "@apollo/react-hooks";
 import { createUseStyles } from "react-jss";
 
-import { meQuery } from "../../schema/queries";
+import { getCurrentUserQuery } from "../../schema/queries";
 import { AUTH_TOKEN } from "../../constants";
 import { Navbar, Nav } from "react-bootstrap";
 
@@ -20,12 +20,9 @@ export const Header = props => {
 
   const {
     data: {
-      me: { id, username, isStaff }
+      currentUser: { id, username, isStaff }
     }
-  } = useQuery(
-    meQuery,
-    { pollInterval: 500 } // get user after cache updated
-  );
+  } = useQuery(getCurrentUserQuery);
 
   const logout = () => {
     localStorage.removeItem(AUTH_TOKEN);

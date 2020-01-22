@@ -9,7 +9,7 @@ import {
   createChoiceMutation,
   createQuestionMutation
 } from "../../schema/mutations";
-import { getAllPollsQuery, meQuery } from "../../schema/queries";
+import { getAllPollsQuery, getCurrentUserQuery } from "../../schema/queries";
 import Question from "../question";
 import BackButton from "../shared/back-button";
 import { defaultPollPic } from "../shared/constants";
@@ -37,9 +37,9 @@ export const CreatePoll = props => {
 
   const {
     data: {
-      me: { username }
+      currentUser: { username }
     }
-  } = useQuery(meQuery);
+  } = useQuery(getCurrentUserQuery);
 
   const [createPoll] = useMutation(createPollMutation, {
     update(cache, { data: { createPoll } }) {

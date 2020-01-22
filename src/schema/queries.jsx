@@ -75,9 +75,9 @@ export const getPassedPollQuery = gql`
   }
 `;
 
-export const meQuery = gql`
-  query me {
-    me {
+export const getCurrentUserQuery = gql`
+  query currentUser {
+    currentUser {
       id
       username
       email

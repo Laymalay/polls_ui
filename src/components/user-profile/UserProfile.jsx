@@ -6,7 +6,7 @@ import { zipWith } from "lodash";
 import { useApolloClient } from "@apollo/react-hooks";
 import { createUseStyles } from "react-jss";
 
-import { meQuery } from "../../schema/queries";
+import { getCurrentUserQuery } from "../../schema/queries";
 import { updateUserMutation } from "../../schema/mutations";
 import { defaultPic } from "../shared/constants";
 import Loading from "../shared/loading";
@@ -37,9 +37,8 @@ const UserProfile = ({ history }) => {
     setAvatar(file);
   };
 
-  const { data: { me } = {}, loading, error } = useQuery(
-    meQuery,
-    { pollInterval: 500 } // get correct user after cache updated and logout/login actions
+  const { data: { currentUser } = {}, loading, error } = useQuery(
+    getCurrentUserQuery
   );
 
   const [
@@ -54,7 +53,7 @@ const UserProfile = ({ history }) => {
     lastName: currentLastName,
     about: currentAbout,
     avatar: currentAvatar
-  } = me;
+  } = currentUser;
 
   const [email, setEmail] = useState(currentEmail);
   const [firstName, setFirstName] = useState(currentFirstName);
@@ -95,7 +94,7 @@ const UserProfile = ({ history }) => {
     event.preventDefault();
     updateUser({
       variables: {
-        ...me,
+        ...currentUser,
         email,
         avatar,
         firstName,
@@ -105,8 +104,8 @@ const UserProfile = ({ history }) => {
       update(cache, { data }) {
         cache.writeData({
           data: {
-            me: {
-              ...me,
+            currentUser: {
+              ...currentUser,
               firstName,
               email,
               lastName,
@@ -127,8 +126,8 @@ const UserProfile = ({ history }) => {
             setAvatar(avatar);
             client.writeData({
               data: {
-                me: {
-                  ...me,
+                currentUser: {
+                  ...currentUser,
                   avatar
                 }
               }
@@ -182,7 +181,7 @@ const UserProfile = ({ history }) => {
               </div>
 
               <div className={classes.mainUserInfo}>
-                <div className={classes.username}>{me.username}</div>
+                <div className={classes.username}>{currentUser.username}</div>
                 <Form.Group as={Row} controlId="userForm.email">
                   <Form.Label column sm="3">
                     Email

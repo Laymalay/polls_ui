@@ -7,16 +7,16 @@ import Loading from "../shared/loading";
 import PassedPoll from "../passed-poll";
 import PollPassing from "../poll-passing";
 import BackButton from "../shared/back-button";
-import { meQuery } from "../../schema/queries";
+import { getCurrentUserQuery } from "../../schema/queries";
 import PollStat from "../poll-stat";
 
 const PollView = ({ match, history }) => {
   const [passAgain, setPassAgain] = useState(false);
   const {
     data: {
-      me: { username }
+      currentUser: { username }
     }
-  } = useQuery(meQuery);
+  } = useQuery(getCurrentUserQuery);
 
   const { data: { poll } = {} } = useQuery(getPollQuery, {
     variables: {

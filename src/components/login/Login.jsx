@@ -14,7 +14,7 @@ import { createUseStyles } from "react-jss";
 
 import { AUTH_TOKEN } from "../../constants";
 import { loginMutation, signupMutation } from "../../schema/mutations";
-import { meQuery } from "../../schema/queries";
+import { getCurrentUserQuery } from "../../schema/queries";
 import Loading from "../shared/loading";
 
 import styles from "./Login.styles";
@@ -38,13 +38,13 @@ const Login = ({ history }) => {
   const [login] = useMutation(loginMutation);
   const [signUp] = useMutation(signupMutation);
 
-  const [getMe, { loadingUser, data }] = useLazyQuery(meQuery, {
+  const [getMe, { loadingUser, data }] = useLazyQuery(getCurrentUserQuery, {
     fetchPolicy: "network-only"
   });
 
   if (loadingUser) return <Loading />;
 
-  if (data && data.me) {
+  if (data && data.currentUser) {
     client.writeData({ data: { isLoggedIn: true} });
     history.push("/polls");
   }

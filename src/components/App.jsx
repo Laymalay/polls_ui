@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "react-apollo-hooks";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { meQuery, isUserLoggedInQuery } from "../schema/queries";
+import { getCurrentUserQuery, isUserLoggedInQuery } from "../schema/queries";
 import CreatePoll from "./create-poll";
 import PollView from "./poll-view";
 import UserPolls from "./user-polls";
@@ -21,7 +21,7 @@ const App = () => {
   const { data: { isLoggedIn } = false } = useQuery(isUserLoggedInQuery);
 
   // update current user in the cache after reloading page
-  const { data: { me } = {}, loading } = useQuery(meQuery, {
+  const { data: { currentUser } = {}, loading } = useQuery(getCurrentUserQuery, {
     fetchPolicy: "network-only"
   });
 
