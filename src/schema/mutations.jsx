@@ -50,6 +50,7 @@ export const createPollMutation = gql`
     }
   }
 `;
+
 export const createQuestionMutation = gql`
   mutation createQuestion($title: String!, $pollId: Int!, $answer: String!) {
     createQuestion(title: $title, pollId: $pollId, answer: $answer) {
@@ -57,6 +58,7 @@ export const createQuestionMutation = gql`
     }
   }
 `;
+
 export const createChoiceMutation = gql`
   mutation createChoice($title: String!, $questionId: Int!) {
     createChoice(title: $title, questionId: $questionId) {
@@ -64,6 +66,7 @@ export const createChoiceMutation = gql`
     }
   }
 `;
+
 export const signupMutation = gql`
   mutation signupMutation(
     $email: String!
@@ -132,8 +135,8 @@ export const updateUserMutation = gql`
 `;
 
 export const uploadFileMutation = gql`
-  mutation ($file: Upload!) {
-    uploadFile(file: $file){
+  mutation($file: Upload!) {
+    uploadFile(file: $file) {
       success
     }
   }
