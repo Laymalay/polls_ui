@@ -46,7 +46,7 @@ export const CreatePoll = props => {
       const { allPolls } = cache.readQuery({ query: getAllPollsQuery });
       cache.writeQuery({
         query: getAllPollsQuery,
-        data: { allPolls: allPolls.concat([createPoll]) }
+        data: { allPolls: [...allPolls, createPoll] }
       });
     }
   });
