@@ -7,6 +7,7 @@ import { createUseStyles } from "react-jss";
 import { getPassedPollQuery } from "schema/queries";
 import Loading from "components/shared/loading";
 import PollHeader from "components/shared/poll-header";
+import Error from "components/shared/error";
 
 import styles from "./PassedPoll.styles";
 
@@ -25,7 +26,7 @@ const PassedPoll = ({ passedPollId, history, passRequest }) => {
   );
 
   if (loading) return <Loading />;
-  if (error) return <>Error</>;
+  if (error) return <Error />;
 
   const { answers, score } = passedPoll;
   const { title, description, imagePath, creator } = passedPoll.poll;

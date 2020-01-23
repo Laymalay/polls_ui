@@ -10,6 +10,7 @@ import { getCurrentUserQuery } from "schema/queries";
 import { updateUserMutation } from "schema/mutations";
 import { defaultPic } from "components/shared/constants";
 import Loading from "components/shared/loading";
+import Error from "components/shared/error";
 import BackButton from "components/shared/back-button";
 
 import styles from "./UserProfile.styles";
@@ -145,7 +146,7 @@ const UserProfile = ({ history }) => {
   }, [avatar]);
 
   if (loading || mutationLoading) return <Loading />;
-  if (error || mutationError) return <>Error</>;
+  if (error || mutationError) return <Error />;
 
   return (
     <>

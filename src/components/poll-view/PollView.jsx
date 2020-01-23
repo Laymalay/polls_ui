@@ -10,6 +10,7 @@ import PollPassing from "components/poll-passing";
 import BackButton from "components/shared/back-button";
 import { getCurrentUserQuery } from "schema/queries";
 import PollStat from "components/poll-stat";
+import Error from "components/shared/error";
 
 const PollView = ({ match, history }) => {
   const [passAgain, setPassAgain] = useState(undefined);
@@ -56,7 +57,7 @@ const PollView = ({ match, history }) => {
   };
 
   if (loading) return <Loading />;
-  if (error) return <>Error</>;
+  if (error) return <Error />;
 
   return (
     <>

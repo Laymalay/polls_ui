@@ -8,6 +8,7 @@ import { getUserQuery } from "schema/queries";
 import Loading from "components/shared/loading";
 import BackButton from "components/shared/back-button";
 import { defaultPic } from "components/shared/constants";
+import Error from "components/shared/error";
 
 import styles from "./UserPage.styles";
 
@@ -30,7 +31,7 @@ const UserPage = ({ history, match }) => {
   );
 
   if (loading) return <Loading />;
-  if (error) return <>Error</>;
+  if (error) return <Error />;
 
   const { id, username, firstName, lastName, email, about } = user;
 

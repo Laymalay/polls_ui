@@ -7,6 +7,7 @@ import { createUseStyles } from "react-jss";
 
 import { getQuestionQuery } from "schema/queries";
 import Loading from "components/shared/loading";
+import Error from "components/shared/error";
 
 import styles from "./QuestionStat.styles";
 
@@ -25,7 +26,7 @@ const QuestionStat = ({ question: { id } }) => {
   );
 
   if (loading) return <Loading />;
-  if (error) return <>Error</>;
+  if (error) return <Error />;
 
   const { answeredQuestions, choices, answer } = question;
 

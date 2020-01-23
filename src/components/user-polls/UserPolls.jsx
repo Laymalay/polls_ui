@@ -7,6 +7,7 @@ import { getAllPollsQuery } from "schema/queries";
 import PollList from "components/poll-list/PollList";
 import Loading from "components/shared/loading";
 import AddButton from "components/shared/add-button";
+import Error from "components/shared/error";
 
 import styles from "./UserPolls.styles";
 
@@ -27,7 +28,7 @@ const UserPolls = ({ match, history }) => {
   const addPoll = () => history.push("/createpoll");
 
   if (loadingPolls) return <Loading />;
-  if (errorPolls) return <>Error</>;
+  if (errorPolls) return <Error />;
 
   return (
     <>
