@@ -5,8 +5,8 @@ import { Row } from "react-bootstrap";
 import randomColor from "randomcolor";
 import { createUseStyles } from "react-jss";
 
-import { getQuestionQuery } from "../../../schema/queries";
-import Loading from "../../shared/loading";
+import { getQuestionQuery } from "schema/queries";
+import Loading from "components/shared/loading";
 
 import styles from "./QuestionStat.styles";
 

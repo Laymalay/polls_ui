@@ -4,10 +4,10 @@ import { withRouter, Link } from "react-router-dom";
 import { Row, Image } from "react-bootstrap";
 import { createUseStyles } from "react-jss";
 
-import { getUserQuery } from "../../schema/queries";
-import Loading from "../shared/loading";
-import BackButton from "../shared/back-button";
-import { defaultPic } from "../shared/constants";
+import { getUserQuery } from "schema/queries";
+import Loading from "components/shared/loading";
+import BackButton from "components/shared/back-button";
+import { defaultPic } from "components/shared/constants";
 
 import styles from "./UserPage.styles";
 

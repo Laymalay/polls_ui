@@ -5,8 +5,8 @@ import { Button } from "react-bootstrap";
 import { createUseStyles } from "react-jss";
 
 import QuestionStat from "./question-stat";
-import BackButton from "../shared/back-button";
-import { deletePollMutation } from "../../schema/mutations";
+import BackButton from "components/shared/back-button";
+import { deletePollMutation } from "schema/mutations";
 import HeaderForm from "./header-form";
 
 import styles from "./PollStat.styles";

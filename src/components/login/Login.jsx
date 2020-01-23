@@ -12,10 +12,10 @@ import { useMutation } from "react-apollo-hooks";
 import { useLazyQuery, useApolloClient } from "@apollo/react-hooks";
 import { createUseStyles } from "react-jss";
 
-import { AUTH_TOKEN } from "../../constants";
-import { loginMutation, signupMutation } from "../../schema/mutations";
-import { getCurrentUserQuery } from "../../schema/queries";
-import Loading from "../shared/loading";
+import { AUTH_TOKEN } from "components/shared/constants";
+import { loginMutation, signupMutation } from "schema/mutations";
+import { getCurrentUserQuery } from "schema/queries";
+import Loading from "components/shared/loading";
 
 import styles from "./Login.styles";
 

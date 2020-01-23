@@ -2,7 +2,7 @@ import React from "react";
 import { Image } from "react-bootstrap";
 import { createUseStyles } from "react-jss";
 
-import { defaultPic } from "../constants";
+import { defaultPic } from "components/shared/constants";
 
 import styles from "./PollHeader.styles";
 

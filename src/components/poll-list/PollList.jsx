@@ -4,8 +4,8 @@ import { Card, Button, CardColumns, Image } from "react-bootstrap";
 import { withRouter } from "react-router";
 import { createUseStyles } from "react-jss";
 
-import {  getCurrentUserQuery } from "../../schema/queries";
-import { defaultPollPic, defaultPic } from "../shared/constants";
+import {  getCurrentUserQuery } from "schema/queries";
+import { defaultPollPic, defaultPic } from "components/shared/constants";
 
 import styles from "./PollList.styles";
 

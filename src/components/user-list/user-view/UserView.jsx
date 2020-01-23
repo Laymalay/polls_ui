@@ -5,8 +5,8 @@ import { Image } from "react-bootstrap";
 import randomColor from "randomcolor";
 import { createUseStyles } from "react-jss";
 
-import { defaultPic } from "../../shared/constants";
-import { getCurrentUserQuery } from "../../../schema/queries";
+import { defaultPic } from "components/shared/constants";
+import { getCurrentUserQuery } from "schema/queries";
 
 import styles from "./UserView.styles";
 

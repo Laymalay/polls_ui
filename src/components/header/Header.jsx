@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { useApolloClient } from "@apollo/react-hooks";
 import { createUseStyles } from "react-jss";
 
-import { getCurrentUserQuery } from "../../schema/queries";
-import { AUTH_TOKEN } from "../../constants";
+import { getCurrentUserQuery } from "schema/queries";
+import { AUTH_TOKEN } from "components/shared/constants";
 import { Navbar, Nav } from "react-bootstrap";
 
 import styles from "./Header.styles";

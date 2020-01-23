@@ -4,7 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import { zipWith } from "lodash";
 import { createUseStyles } from "react-jss";
 
-import { updatePollMutation } from "../../../schema/mutations";
+import { updatePollMutation } from "schema/mutations";
 
 import styles from "./HeaderForm.styles";
 

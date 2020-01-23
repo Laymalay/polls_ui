@@ -6,11 +6,11 @@ import { zipWith } from "lodash";
 import { useApolloClient } from "@apollo/react-hooks";
 import { createUseStyles } from "react-jss";
 
-import { getCurrentUserQuery } from "../../schema/queries";
-import { updateUserMutation } from "../../schema/mutations";
-import { defaultPic } from "../shared/constants";
-import Loading from "../shared/loading";
-import BackButton from "../shared/back-button";
+import { getCurrentUserQuery } from "schema/queries";
+import { updateUserMutation } from "schema/mutations";
+import { defaultPic } from "components/shared/constants";
+import Loading from "components/shared/loading";
+import BackButton from "components/shared/back-button";
 
 import styles from "./UserProfile.styles";
 

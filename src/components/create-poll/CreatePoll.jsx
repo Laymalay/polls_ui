@@ -8,11 +8,11 @@ import {
   createPollMutation,
   createChoiceMutation,
   createQuestionMutation
-} from "../../schema/mutations";
-import { getAllPollsQuery, getCurrentUserQuery } from "../../schema/queries";
-import Question from "../question";
-import BackButton from "../shared/back-button";
-import { defaultPollPic } from "../shared/constants";
+} from "schema/mutations";
+import { getAllPollsQuery, getCurrentUserQuery } from "schema/queries";
+import Question from "components/question";
+import BackButton from "components/shared/back-button";
+import { defaultPollPic } from "components/shared/constants";
 
 import styles from "./CreatePoll.styles";
 

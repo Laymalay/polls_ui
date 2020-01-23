@@ -4,8 +4,8 @@ import { Form, Row, Col, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 import { createUseStyles } from "react-jss";
 
-import PollHeader from "../shared/poll-header";
-import { createPassedPollMutation } from "../../schema/mutations";
+import PollHeader from "components/shared/poll-header";
+import { createPassedPollMutation } from "schema/mutations";
 
 import styles from "./PollPassing.styles";
 

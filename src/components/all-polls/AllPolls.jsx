@@ -3,10 +3,10 @@ import { withRouter } from "react-router-dom";
 import { useQuery } from "react-apollo-hooks";
 import { createUseStyles } from "react-jss";
 
-import { getAllPollsQuery } from "../../schema/queries";
-import PollList from "../poll-list/PollList";
-import Loading from "../shared/loading";
-import AddButton from "../shared/add-button";
+import { getAllPollsQuery } from "schema/queries";
+import PollList from "components/poll-list/PollList";
+import Loading from "components/shared/loading";
+import AddButton from "components/shared/add-button";
 
 import styles from "./AllPolls.styles";
 

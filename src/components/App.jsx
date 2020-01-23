@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "react-apollo-hooks";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { getCurrentUserQuery, isUserLoggedInQuery } from "../schema/queries";
+import { getCurrentUserQuery, isUserLoggedInQuery } from "schema/queries";
 import CreatePoll from "./create-poll";
 import PollView from "./poll-view";
 import UserPolls from "./user-polls";

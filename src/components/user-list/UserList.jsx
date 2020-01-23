@@ -3,7 +3,7 @@ import { useQuery } from "react-apollo-hooks";
 import { withRouter } from "react-router";
 import { createUseStyles } from "react-jss";
 
-import { getUsersQuery } from "../../schema/queries";
+import { getUsersQuery } from "schema/queries";
 import UserView from "./user-view";
 
 import styles from "./UserList.styles";

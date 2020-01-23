@@ -4,9 +4,9 @@ import { withRouter } from "react-router";
 import { useQuery } from "react-apollo";
 import { createUseStyles } from "react-jss";
 
-import { getPassedPollQuery } from "../../schema/queries";
-import Loading from "../shared/loading";
-import PollHeader from "../shared/poll-header";
+import { getPassedPollQuery } from "schema/queries";
+import Loading from "components/shared/loading";
+import PollHeader from "components/shared/poll-header";
 
 import styles from "./PassedPoll.styles";
 
