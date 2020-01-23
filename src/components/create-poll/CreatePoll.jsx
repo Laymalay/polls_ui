@@ -4,11 +4,7 @@ import { withRouter } from "react-router";
 import { Form, Button, Col } from "react-bootstrap";
 import { createUseStyles } from "react-jss";
 
-import {
-  createPollMutation,
-  createChoiceMutation,
-  createQuestionMutation
-} from "schema/mutations";
+import { createPollMutation } from "schema/mutations";
 import { getAllPollsQuery, getCurrentUserQuery } from "schema/queries";
 import Question from "components/question";
 import BackButton from "components/shared/back-button";
@@ -51,55 +47,47 @@ export const CreatePoll = props => {
     }
   });
 
-  const [createQuestion] = useMutation(createQuestionMutation);
-  const [createChoice] = useMutation(createChoiceMutation);
-
   const isCreateDisabled =
     Object.keys(errors).some(x => errors[x]) || questions.length <= 1;
 
   const handleSubmit = event => {
+    // TODO: validate if the poll have questions with the same title
+
     event.preventDefault();
+
+    const choices = questions.reduce(
+      (arr, { questionTitle, questionChoices }) => {
+        if (questionTitle) {
+          const parsed_choices = questionChoices.map(title => ({
+            title,
+            questionTitle
+          }));
+          arr = [...arr, ...parsed_choices];
+        }
+        return arr;
+      },
+      []
+    );
+
+    const parsed_questions = questions.reduce(
+      (arr, { questionTitle, questionAnswer }) => {
+        if (questionTitle) {
+          arr = [...arr, { title: questionTitle, answer: questionAnswer }];
+        }
+        return arr;
+      },
+      []
+    );
+
     createPoll({
       variables: {
         title,
         description,
-        imagePath
+        imagePath,
+        questions: parsed_questions,
+        choices
       }
-    }).then(
-      ({
-        data: {
-          createPoll: { id }
-        }
-      }) => {
-        questions
-          .filter(question => question.questionTitle)
-          .forEach(({ questionTitle, questionAnswer, questionChoices }) => {
-            createQuestion({
-              variables: {
-                answer: questionAnswer,
-                pollId: id,
-                title: questionTitle
-              }
-            }).then(
-              ({
-                data: {
-                  createQuestion: { id }
-                }
-              }) => {
-                questionChoices.forEach(item => {
-                  createChoice({
-                    variables: {
-                      title: item,
-                      questionId: id
-                    }
-                  });
-                });
-              }
-            );
-          });
-        props.history.push("/polls");
-      }
-    );
+    }).then(({ data: { createPoll: { id } } }) => props.history.push("/polls"));
   };
 
   return (

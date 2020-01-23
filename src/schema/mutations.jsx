@@ -34,11 +34,15 @@ export const createPollMutation = gql`
     $title: String!
     $description: String!
     $imagePath: String!
+    $questions: [QuestionInputType]!
+    $choices: [ChoiceInputType]!
   ) {
     createPoll(
       title: $title
       description: $description
       imagePath: $imagePath
+      questions: $questions
+      choices: $choices
     ) {
       title
       description
@@ -47,22 +51,6 @@ export const createPollMutation = gql`
       creator {
         username
       }
-    }
-  }
-`;
-
-export const createQuestionMutation = gql`
-  mutation createQuestion($title: String!, $pollId: Int!, $answer: String!) {
-    createQuestion(title: $title, pollId: $pollId, answer: $answer) {
-      id
-    }
-  }
-`;
-
-export const createChoiceMutation = gql`
-  mutation createChoice($title: String!, $questionId: Int!) {
-    createChoice(title: $title, questionId: $questionId) {
-      title
     }
   }
 `;
