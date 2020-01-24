@@ -20,7 +20,8 @@ const QuestionStat = ({ question: { id } }) => {
     getQuestionQuery,
     {
       variables: {
-        id
+        id,
+        stat: true
       }
     }
   );
@@ -28,14 +29,15 @@ const QuestionStat = ({ question: { id } }) => {
   if (loading) return <Loading />;
   if (error) return <Error />;
 
-  const { answeredQuestions, choices, answer } = question;
+  const { answeredQuestions, choices, answer, stat } = question;
+  
+  const statistic = JSON.parse(stat);
 
-  let stat = {};
-
+  // Added color and title to statistic
   choices.forEach(
     ({ id, title }) =>
-      (stat[id] = {
-        value: 0,
+      (statistic[id] = {
+        value: statistic[id],
         title: title,
         color: randomColor({
           luminosity: "bright",
@@ -58,23 +60,19 @@ const QuestionStat = ({ question: { id } }) => {
           fontFamily: "sans-serif",
           fontSize: "13px"
         }}
-        data={Object.values(stat).filter(({ value }) => value !== 0)}
+        data={Object.values(statistic).filter(({ value }) => value !== 0)}
       />
     ) : (
       <p className={classes.waitAlert}>waiting for answers</p>
     );
   };
 
-  answeredQuestions.forEach(answer => {
-    stat[answer.choice.id].value += 1;
-  });
-
   return (
     <div className={classes.questionStatContent}>
       <p className={classes.questionStatTitle}>{question.title}</p>
 
       <div className={classes.questionStatChoices}>
-        {Object.values(stat).map(({ title, color }) => (
+        {Object.values(statistic).map(({ title, color }) => (
           <Row key={title} className={classes.line}>
             <div>
               <span style={{ color }} className="oi oi-media-record"></span>

@@ -105,10 +105,11 @@ export const isUserLoggedInQuery = gql`
 `;
 
 export const getQuestionQuery = gql`
-  query question($id: Int!) {
-    question(id: $id) {
+  query question($id: Int!, $stat: Boolean) {
+    question(id: $id, stat: $stat) {
       id
       title
+      stat
       answer
       choices {
         id
