@@ -17,7 +17,7 @@ import styles from "./UserProfile.styles";
 
 const useStyles = createUseStyles(styles);
 
-const UserProfile = ({ history :{push} }) => {
+const UserProfile = ({ history: { push } }) => {
   const classes = useStyles();
 
   const client = useApolloClient();

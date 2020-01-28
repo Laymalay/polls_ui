@@ -41,7 +41,7 @@ const PollPassing = ({ poll, passRequest }) => {
         pollId: id,
         answeredQuestions: answers
       }
-    }).then(_ => {
+    }).then(() => {
       passRequest(false);
     });
   };

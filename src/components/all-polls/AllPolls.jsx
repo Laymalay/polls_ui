@@ -8,7 +8,7 @@ import Loading from "components/shared/loading";
 import AddButton from "components/shared/add-button";
 import ErrorContainer from "components/shared/error";
 
-const AllPolls = props => {
+const AllPolls = ({ history: { push } }) => {
   const { data, loading, error } = useQuery(getAllPollsQuery, {
     fetchPolicy: "network-only"
   });
@@ -18,14 +18,10 @@ const AllPolls = props => {
 
   const { allPolls: polls } = data;
 
-  const addPoll = () => {
-    props.history.push("/createpoll");
-  };
-
   return (
     <>
       {polls && <PollList polls={polls} />}
-      <AddButton onClick={addPoll} />
+      <AddButton onClick={() => push("/createpoll")} />
     </>
   );
 };

@@ -21,19 +21,18 @@ const UserPolls = ({
 }) => {
   const classes = useStyles();
 
-  const {
-    data: { allPolls: polls = {} } = {},
-    loading: loadingPolls,
-    error: errorPolls
-  } = useQuery(getAllPollsQuery, {
-    variables: { creator: id },
-    fetchPolicy: "network-only"
-  });
+  const { data: { allPolls: polls = {} } = {}, loading, error } = useQuery(
+    getAllPollsQuery,
+    {
+      variables: { creator: id },
+      fetchPolicy: "network-only"
+    }
+  );
 
   const addPoll = () => push("/createpoll");
 
-  if (loadingPolls) return <Loading />;
-  if (errorPolls) return <ErrorContainer />;
+  if (loading) return <Loading />;
+  if (error) return <ErrorContainer />;
 
   return (
     <>

@@ -16,6 +16,7 @@ import { AUTH_TOKEN } from "components/shared/constants";
 import { loginMutation, signupMutation } from "schema/mutations";
 import { getCurrentUserQuery } from "schema/queries";
 import Loading from "components/shared/loading";
+import ErrorContainer from "components/shared/error";
 
 import styles from "./Login.styles";
 
@@ -38,11 +39,12 @@ const Login = ({ history: { push } }) => {
   const [login] = useMutation(loginMutation);
   const [signUp] = useMutation(signupMutation);
 
-  const [getMe, { loadingUser, data }] = useLazyQuery(getCurrentUserQuery, {
+  const [getMe, { loading, data, error }] = useLazyQuery(getCurrentUserQuery, {
     fetchPolicy: "network-only"
   });
 
-  if (loadingUser) return <Loading />;
+  if (loading) return <Loading />;
+  if (error) return <ErrorContainer />;
 
   if (data && data.currentUser) {
     client.writeData({ data: { isLoggedIn: true } });

@@ -16,8 +16,6 @@ const useStyles = createUseStyles(styles);
 const PollList = ({ history: { push }, polls }) => {
   const classes = useStyles();
 
-  const openPollView = pollId => push(`/pollView/${pollId}`);
-
   const {
     data: {
       currentUser: { username }
@@ -61,7 +59,7 @@ const PollList = ({ history: { push }, polls }) => {
                   <Card.Subtitle>By {creator.username}</Card.Subtitle>
                 </div>
                 <Button
-                  onClick={() => openPollView(id)}
+                  onClick={() => push(`/pollView/${id}`)}
                   className={classes.passBtn}
                   variant="info"
                   size="lg"

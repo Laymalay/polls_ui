@@ -76,8 +76,8 @@ const PollView = ({
   };
 
   if (
-    getCurrentUserQueryLoading &&
-    getPollQueryLoading &&
+    getCurrentUserQueryLoading ||
+    getPollQueryLoading ||
     pollPassedByUserLoading
   )
     return <Loading />;
