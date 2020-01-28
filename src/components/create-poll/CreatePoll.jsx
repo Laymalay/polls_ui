@@ -53,24 +53,17 @@ export const CreatePoll = ({ history: { push } }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    const choices = questions.reduce(
-      (arr, { questionTitle, questionChoices }) => {
-        if (questionTitle) {
-          const parsed_choices = questionChoices.map(title => ({
-            title,
-            questionTitle
-          }));
-          arr = [...arr, ...parsed_choices];
-        }
-        return arr;
-      },
-      []
-    );
-
     const parsed_questions = questions.reduce(
-      (arr, { questionTitle, questionAnswer }) => {
+      (arr, { questionTitle, questionAnswer, questionChoices }) => {
         if (questionTitle) {
-          arr = [...arr, { title: questionTitle, answer: questionAnswer }];
+          arr = [
+            ...arr,
+            {
+              title: questionTitle,
+              answer: questionAnswer,
+              choices: questionChoices
+            }
+          ];
         }
         return arr;
       },
@@ -82,10 +75,9 @@ export const CreatePoll = ({ history: { push } }) => {
         title,
         description,
         imagePath,
-        questions: parsed_questions,
-        choices
+        questions: parsed_questions
       }
-    }).then(({ data: { createPoll: { id } } }) => push("/polls"));
+    }).then(() => push("/polls"));
   };
 
   return (

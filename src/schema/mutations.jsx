@@ -35,14 +35,12 @@ export const createPollMutation = gql`
     $description: String!
     $imagePath: String!
     $questions: [QuestionInputType]!
-    $choices: [ChoiceInputType]!
   ) {
     createPoll(
       title: $title
       description: $description
       imagePath: $imagePath
       questions: $questions
-      choices: $choices
     ) {
       title
       description
