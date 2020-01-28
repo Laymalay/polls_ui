@@ -7,7 +7,7 @@ import { createUseStyles } from "react-jss";
 
 import { getQuestionQuery } from "schema/queries";
 import Loading from "components/shared/loading";
-import Error from "components/shared/error";
+import ErrorContainer from "components/shared/error";
 
 import styles from "./QuestionStat.styles";
 
@@ -16,7 +16,7 @@ const useStyles = createUseStyles(styles);
 const QuestionStat = ({ question: { id } }) => {
   const classes = useStyles();
 
-  const { data: { question } = {}, loading, error } = useQuery(
+  const { data: { question = {} } = {}, loading, error } = useQuery(
     getQuestionQuery,
     {
       variables: {
@@ -27,10 +27,10 @@ const QuestionStat = ({ question: { id } }) => {
   );
 
   if (loading) return <Loading />;
-  if (error) return <Error />;
+  if (error) return <ErrorContainer />;
 
   const { answeredQuestions, choices, answer, stat } = question;
-  
+
   const statistic = JSON.parse(stat);
 
   // Added color and title to statistic

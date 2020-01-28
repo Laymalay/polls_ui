@@ -4,31 +4,37 @@ import { Card, Button, CardColumns, Image } from "react-bootstrap";
 import { withRouter } from "react-router";
 import { createUseStyles } from "react-jss";
 
-import {  getCurrentUserQuery } from "schema/queries";
+import { getCurrentUserQuery } from "schema/queries";
 import { defaultPollPic, defaultPic } from "components/shared/constants";
+import Loading from "components/shared/loading";
+import ErrorContainer from "components/shared/error";
 
 import styles from "./PollList.styles";
 
 const useStyles = createUseStyles(styles);
 
-const PollList = props => {
+const PollList = ({ history: { push }, polls }) => {
   const classes = useStyles();
 
-  const openPollView = pollId => props.history.push(`/pollView/${pollId}`);
-  const polls = props.polls;
+  const openPollView = pollId => push(`/pollView/${pollId}`);
 
   const {
     data: {
       currentUser: { username }
-    }
+    },
+    loading,
+    error
   } = useQuery(getCurrentUserQuery);
-  
+
+  if (loading) return <Loading />;
+  if (error) return <ErrorContainer />;
+
   return (
     <div>
       <CardColumns className={classes.cards}>
-        {polls.map(poll => (
+        {polls.map(({ title, imagePath, creator, id, description }) => (
           <Card
-            key={poll.title}
+            key={title}
             bg="light"
             border="light"
             className={classes.pollCard}
@@ -36,39 +42,35 @@ const PollList = props => {
             <Card.Img
               variant="top"
               onError={e => (e.target.src = defaultPollPic)}
-              src={poll.imagePath}
+              src={imagePath}
               className={classes.cardImg}
             />
-            {poll.creator.avatar && (
+            {creator.avatar && (
               <Image
                 onError={e => (e.target.src = defaultPic)}
                 className={classes.pollListCreatorPic}
                 roundedCircle
-                src={poll.creator.avatar}
+                src={creator.avatar}
               />
             )}
 
             <Card.Body>
               <div className={classes.pollMain}>
                 <div>
-                  <Card.Title className={classes.cardTitle}>
-                    {poll.title}
-                  </Card.Title>
-                  <Card.Subtitle>By {poll.creator.username}</Card.Subtitle>
+                  <Card.Title className={classes.cardTitle}>{title}</Card.Title>
+                  <Card.Subtitle>By {creator.username}</Card.Subtitle>
                 </div>
                 <Button
-                  onClick={() => openPollView(poll.id)}
+                  onClick={() => openPollView(id)}
                   className={classes.passBtn}
                   variant="info"
                   size="lg"
                 >
-                  {username === poll.creator.username ? "View" : "Pass"}
+                  {username === creator.username ? "View" : "Pass"}
                 </Button>
               </div>
 
-              <Card.Text className={classes.cardText}>
-                {poll.description}
-              </Card.Text>
+              <Card.Text className={classes.cardText}>{description}</Card.Text>
             </Card.Body>
           </Card>
         ))}

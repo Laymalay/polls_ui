@@ -1,27 +1,20 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { useQuery } from "react-apollo-hooks";
-import { createUseStyles } from "react-jss";
 
 import { getAllPollsQuery } from "schema/queries";
 import PollList from "components/poll-list/PollList";
 import Loading from "components/shared/loading";
 import AddButton from "components/shared/add-button";
-import Error from "components/shared/error";
-
-import styles from "./AllPolls.styles";
-
-const useStyles = createUseStyles(styles);
+import ErrorContainer from "components/shared/error";
 
 const AllPolls = props => {
-  const classes = useStyles();
-
   const { data, loading, error } = useQuery(getAllPollsQuery, {
     fetchPolicy: "network-only"
   });
 
   if (loading) return <Loading />;
-  if (error) return <Error />;
+  if (error) return <ErrorContainer />;
 
   const { allPolls: polls } = data;
 

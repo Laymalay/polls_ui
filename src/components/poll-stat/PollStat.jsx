@@ -13,29 +13,28 @@ import styles from "./PollStat.styles";
 
 const useStyles = createUseStyles(styles);
 
-const PollStat = ({ history, poll }) => {
+const PollStat = ({ history: { push }, poll }) => {
   const classes = useStyles();
 
-  const { questions } = poll;
+  const { questions, id } = poll;
 
   const [deletePoll] = useMutation(deletePollMutation);
 
   const handleDelete = () => {
-    deletePoll({ variables: { id: poll.id } }).then(data => {
-      history.push("/polls");
+    deletePoll({ variables: { id } }).then(data => {
+      push("/polls");
     });
   };
 
   return (
     <>
       <div className={classes.pollStatForm}>
-        <BackButton onClick={() => history.push("/polls")} />
+        <BackButton onClick={() => push("/polls")} />
         <HeaderForm poll={poll} />
         <p className={classes.pollStatQuestions}>Answer statistics:</p>
-        {questions &&
-          questions.map(question => (
-            <QuestionStat key={question.title} question={question} />
-          ))}
+        {(questions || []).map(question => (
+          <QuestionStat key={question.title} question={question} />
+        ))}
         <Button
           size="lg"
           className={classes.bottomButton}

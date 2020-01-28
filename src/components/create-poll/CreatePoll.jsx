@@ -14,7 +14,7 @@ import styles from "./CreatePoll.styles";
 
 const useStyles = createUseStyles(styles);
 
-export const CreatePoll = props => {
+export const CreatePoll = ({ history: { push } }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState([{}]);
@@ -51,8 +51,6 @@ export const CreatePoll = props => {
     Object.keys(errors).some(x => errors[x]) || questions.length <= 1;
 
   const handleSubmit = event => {
-    // TODO: validate if the poll have questions with the same title
-
     event.preventDefault();
 
     const choices = questions.reduce(
@@ -87,12 +85,12 @@ export const CreatePoll = props => {
         questions: parsed_questions,
         choices
       }
-    }).then(({ data: { createPoll: { id } } }) => props.history.push("/polls"));
+    }).then(({ data: { createPoll: { id } } }) => push("/polls"));
   };
 
   return (
     <Form className={classes.createForm}>
-      <BackButton onClick={() => props.history.push("/polls")} />
+      <BackButton onClick={() => push("/polls")} />
       <div className={classes.headerStyle}>
         <Form.Row className={classes.firstLine}>
           <Form.Group as={Col} md="3">

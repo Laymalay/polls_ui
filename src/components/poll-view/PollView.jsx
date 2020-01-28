@@ -3,35 +3,53 @@ import { useQuery } from "react-apollo";
 import { withRouter } from "react-router";
 import { useLazyQuery } from "@apollo/react-hooks";
 
-import { pollPassedByUserQuery, getPollQuery } from "schema/queries";
+import {
+  pollPassedByUserQuery,
+  getPollQuery,
+  getCurrentUserQuery
+} from "schema/queries";
 import Loading from "components/shared/loading";
 import PassedPoll from "components/passed-poll";
 import PollPassing from "components/poll-passing";
 import BackButton from "components/shared/back-button";
-import { getCurrentUserQuery } from "schema/queries";
 import PollStat from "components/poll-stat";
-import Error from "components/shared/error";
+import ErrorContainer from "components/shared/error";
 
-const PollView = ({ match, history }) => {
+const PollView = ({
+  match: {
+    params: { id }
+  },
+  history: { push }
+}) => {
   const [passAgain, setPassAgain] = useState(undefined);
   const {
     data: {
       currentUser: { username }
-    }
+    },
+    loading: getCurrentUserQueryLoading,
+    error: getCurrentUserQueryError
   } = useQuery(getCurrentUserQuery);
 
-  const { data: { poll } = {} } = useQuery(getPollQuery, {
+  const {
+    data: { poll = undefined } = {},
+    loading: getPollQueryLoading,
+    error: getPollQueryError
+  } = useQuery(getPollQuery, {
     variables: {
-      id: match.params.id
+      id
     }
   });
-  
+
   const [
     getPollPassedByUser,
-    { loading, data: { pollPassedByUser = {} } = {}, error }
+    {
+      data: { pollPassedByUser = undefined } = {},
+      loading: pollPassedByUserLoading,
+      error: pollPassedByUserError
+    }
   ] = useLazyQuery(pollPassedByUserQuery, {
     variables: {
-      poll: match.params.id
+      poll: id
     },
     fetchPolicy: "network-only"
   });
@@ -41,7 +59,7 @@ const PollView = ({ match, history }) => {
   }, [getPollPassedByUser, passAgain]);
 
   const loadPollView = () => {
-    if (poll.creator.username === username) {
+    if (poll.creator && poll.creator.username === username) {
       return <PollStat poll={poll} />;
     }
 
@@ -53,15 +71,23 @@ const PollView = ({ match, history }) => {
         />
       );
     }
+
     return <PollPassing poll={poll} passRequest={setPassAgain} />;
   };
 
-  if (loading) return <Loading />;
-  if (error) return <Error />;
+  if (
+    getCurrentUserQueryLoading &&
+    getPollQueryLoading &&
+    pollPassedByUserLoading
+  )
+    return <Loading />;
+
+  if (getCurrentUserQueryError || getPollQueryError || pollPassedByUserError)
+    return <ErrorContainer />;
 
   return (
     <>
-      <BackButton onClick={() => history.push("/polls")} />
+      <BackButton onClick={() => push("/polls")} />
       {poll && loadPollView()}
     </>
   );

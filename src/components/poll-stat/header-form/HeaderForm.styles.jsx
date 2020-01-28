@@ -12,6 +12,7 @@ const style = {
     height: 400,
     width: 900,
     backgroundImage: ({ imagePath }) => `url(${imagePath})`,
+    backgroundColor: "rgba(23, 163, 184, 0.2)",
     borderRadius: 5,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -33,6 +34,12 @@ const style = {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  updateSuccessAlert: {
+    width: "fit-content",
+    right: 15,
+    position: "absolute",
+    bottom: 0
   }
 };
 

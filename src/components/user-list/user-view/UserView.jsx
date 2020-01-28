@@ -7,28 +7,35 @@ import { createUseStyles } from "react-jss";
 
 import { defaultPic } from "components/shared/constants";
 import { getCurrentUserQuery } from "schema/queries";
+import Loading from "components/shared/loading";
+import ErrorContainer from "components/shared/error";
 
 import styles from "./UserView.styles";
 
 const useStyles = createUseStyles(styles);
 
-const UserView = ({ history, user }) => {
+const UserView = ({
+  history: { push },
+  user: { avatar: userAvatar, id, about, username, firstName, lastName }
+}) => {
   const classes = useStyles();
 
-  const [avatar, setAvatar] = useState(user.avatar);
-  const { data: { currentUser } = {} } = useQuery(getCurrentUserQuery);
+  const [avatar, setAvatar] = useState(userAvatar);
+  const { data: { currentUser } = {}, loading, error } = useQuery(
+    getCurrentUserQuery
+  );
 
   useEffect(() => {
-    if (!user.avatar) {
+    if (!userAvatar) {
       setAvatar(defaultPic);
     }
-  }, [user.avatar]);
+  }, [userAvatar]);
 
   const showUserPage = () => {
-    if (currentUser && currentUser.id === user.id) {
-      return history.push("/userprofile");
+    if (currentUser && currentUser.id === id) {
+      return push("/userprofile");
     }
-    history.push(`user/${user.id}`);
+    push(`user/${id}`);
   };
 
   const userColor = randomColor({
@@ -37,6 +44,9 @@ const UserView = ({ history, user }) => {
     format: "rgba",
     alpha: 0.6
   });
+
+  if (loading) return <Loading />;
+  if (error) return <ErrorContainer />;
 
   return (
     <div
@@ -52,12 +62,12 @@ const UserView = ({ history, user }) => {
         src={avatar}
       />
       <div>
-        <h2 className={classes.userViewUsername}>{user.username}</h2>
+        <h2 className={classes.userViewUsername}>{username}</h2>
         <h5>
-          {user.firstName} {user.lastName}
+          {firstName} {lastName}
         </h5>
         <hr />
-        <p>{user.about}</p>
+        <p>{about}</p>
       </div>
     </div>
   );

@@ -15,19 +15,21 @@ import PrivateRoute from "./PrivateRoute";
 import PageNotFound from "./page-not-found";
 import UserList from "./user-list";
 import UserPage from "./user-page";
+import ErrorContainer from "components/shared/error";
 
 const App = () => {
-
-  const { data: { isLoggedIn } = false } = useQuery(isUserLoggedInQuery);
+  const { data: { isLoggedIn = false } = {} } = useQuery(isUserLoggedInQuery);
 
   // update current user in the cache after reloading page
-  const { data: { currentUser } = {}, loading } = useQuery(getCurrentUserQuery, {
-    fetchPolicy: "network-only"
-  });
+  const { data: { currentUser } = {}, error, loading } = useQuery(
+    getCurrentUserQuery,
+    {
+      fetchPolicy: "network-only"
+    }
+  );
 
   if (loading) return <Loading />;
-
-
+  if (error) return <ErrorContainer />;
 
   return (
     <Router>

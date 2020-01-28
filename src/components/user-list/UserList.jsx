@@ -10,14 +10,18 @@ import styles from "./UserList.styles";
 
 const useStyles = createUseStyles(styles);
 
-const UserList = props => {
+const UserList = () => {
   const classes = useStyles();
 
-  const { data: { users } = {} } = useQuery(getUsersQuery);
+  const { data: { users = [] } = {} } = useQuery(getUsersQuery, {
+    fetchPolicy: "network-only"
+  });
 
   return (
     <div className={classes.userListContent}>
-      {users && users.map(user => <UserView key={user.username} user={user} />)}
+      {users.map(user => (
+        <UserView key={user.username} user={user} />
+      ))}
     </div>
   );
 };

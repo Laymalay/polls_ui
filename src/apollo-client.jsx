@@ -4,6 +4,7 @@ import { setContext } from "apollo-link-context";
 import { from } from "apollo-link";
 import { createUploadLink } from "apollo-upload-client";
 import { resolvers, typeDefs } from "./resolvers";
+import { onError } from 'apollo-link-error';
 
 import { AUTH_TOKEN } from "./constants";
 
@@ -15,6 +16,11 @@ const uploadLink = createUploadLink({
     "keep-alive": "true",
   }
 });
+
+const errorLink = onError(({ graphQLErrors }) => {
+  if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message))
+})
+
 
 const authMiddleware = setContext(async (req, { headers }) => {
   const token = localStorage.getItem(AUTH_TOKEN);
@@ -31,7 +37,7 @@ const authMiddleware = setContext(async (req, { headers }) => {
 export const client = new ApolloClient({
   uri: GRAPHQL_ENDPOINT,
   cache: new InMemoryCache(),
-  link: from([authMiddleware, uploadLink]),
+  link: from([errorLink, authMiddleware, uploadLink]),
   typeDefs,
   resolvers
 });

@@ -22,13 +22,6 @@ body {
     box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(23, 163, 184, 0.1);
 }
 
-.hr {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.13);
-}
-
 a:hover {
     text-decoration: none;
 }
@@ -39,29 +32,4 @@ a:hover {
 
 .form-control:disabled, .form-control[readonly] {
     background-color: rgba(255, 255, 255, 0.5);
-}
-
-.main-content {
-    width: 900px;
-    margin-top: 40px;
-    margin: 0 auto;
-}
-
-.row-flex {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.column-flex {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.description {
-    max-height: 200px;
-}
-.bottom-button{
-  margin-bottom: 20px;    
 }

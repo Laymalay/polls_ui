@@ -7,13 +7,13 @@ import { createUseStyles } from "react-jss";
 import { getPassedPollQuery } from "schema/queries";
 import Loading from "components/shared/loading";
 import PollHeader from "components/shared/poll-header";
-import Error from "components/shared/error";
+import ErrorContainer from "components/shared/error";
 
 import styles from "./PassedPoll.styles";
 
 const useStyles = createUseStyles(styles);
 
-const PassedPoll = ({ passedPollId, history, passRequest }) => {
+const PassedPoll = ({ passedPollId, passRequest }) => {
   const classes = useStyles();
 
   const { data: { passedPoll = {} } = {}, loading, error } = useQuery(
@@ -26,63 +26,61 @@ const PassedPoll = ({ passedPollId, history, passRequest }) => {
   );
 
   if (loading) return <Loading />;
-  if (error) return <Error />;
+  if (error) return <ErrorContainer />;
 
-  const { answers, score } = passedPoll;
-  const { title, description, imagePath, creator } = passedPoll.poll;
+  const { answers, score, poll } = passedPoll;
+  const { title, description, imagePath, creator } = poll;
 
   return (
-    passedPoll && (
-      <div className={classes.mainContent}>
-        <PollHeader
-          avatar={creator.avatar}
-          imagePath={imagePath}
-          title={title}
-          username={creator.username}
-          description={description}
-        />
-        <p className={classes.passedPollScore}>
-          Score: <b>{score * 100}%</b>{" "}
-        </p>
-        {answers.map(answer => {
-          return (
-            <div
-              key={answer.question.title}
-              className={answer.correct ? classes.correct : classes.wrong}
-              as={Row}
-            >
-              <Form.Label as="legend" column sm={5}>
-                {answer.question.title}
-              </Form.Label>
-              <Col sm={3}>
-                {answer.question.choices.map(choice => (
-                  <Form.Check
-                    readOnly
-                    custom
-                    disabled={answer.choice.id !== choice.id}
-                    type="radio"
-                    key={`${answer.question.title}${choice.id}`}
-                    name={answer.question.title}
-                    id={choice.id}
-                    label={choice.title}
-                    checked={answer.choice.id === choice.id}
-                  />
-                ))}
-              </Col>
-            </div>
-          );
-        })}
+    <div className={classes.mainContent}>
+      <PollHeader
+        avatar={creator.avatar}
+        imagePath={imagePath}
+        title={title}
+        username={creator.username}
+        description={description}
+      />
+      <p className={classes.passedPollScore}>
+        Score: <b>{score * 100}%</b>{" "}
+      </p>
+      {answers.map(({ question, correct, choice }) => {
+        return (
+          <div
+            key={question.title}
+            className={correct ? classes.correct : classes.wrong}
+            as={Row}
+          >
+            <Form.Label as="legend" column sm={5}>
+              {question.title}
+            </Form.Label>
+            <Col sm={3}>
+              {question.choices.map(({ id, title }) => (
+                <Form.Check
+                  readOnly
+                  custom
+                  disabled={choice.id !== id}
+                  type="radio"
+                  key={`${question.title}${id}`}
+                  name={question.title}
+                  id={id}
+                  label={title}
+                  checked={choice.id === id}
+                />
+              ))}
+            </Col>
+          </div>
+        );
+      })}
 
-        <Button
-          size="lg"
-          variant="outline-info"
-          className={classes.passAgainBtn}
-          onClick={() => passRequest(true)}
-        >
-          Pass again
-        </Button>
-      </div>
-    )
+      <Button
+        size="lg"
+        variant="outline-info"
+        className={classes.passAgainBtn}
+        onClick={() => passRequest(true)}
+      >
+        Pass again
+      </Button>
+    </div>
   );
 };
 

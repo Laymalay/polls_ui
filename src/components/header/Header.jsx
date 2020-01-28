@@ -8,26 +8,31 @@ import { createUseStyles } from "react-jss";
 import { getCurrentUserQuery } from "schema/queries";
 import { AUTH_TOKEN } from "components/shared/constants";
 import { Navbar, Nav } from "react-bootstrap";
+import Loading from "components/shared/loading";
+import ErrorContainer from "components/shared/error";
 
 import styles from "./Header.styles";
 
 const useStyles = createUseStyles(styles);
 
-export const Header = props => {
+export const Header = () => {
   const classes = useStyles();
 
   const client = useApolloClient();
 
-  const {
-    data: {
-      currentUser: { id, username, isStaff }
-    }
-  } = useQuery(getCurrentUserQuery);
+  const { data: { currentUser = {} } = {}, loading, error } = useQuery(
+    getCurrentUserQuery
+  );
 
   const logout = () => {
     localStorage.removeItem(AUTH_TOKEN);
     client.writeData({ data: { isLoggedIn: false } });
   };
+
+  if (loading) return <Loading />;
+  if (error) return <ErrorContainer />;
+
+  const { id, username, isStaff } = currentUser;
 
   return (
     <Navbar sticky="top" variant="dark" className={classes.navbar}>

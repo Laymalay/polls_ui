@@ -10,14 +10,14 @@ import { getCurrentUserQuery } from "schema/queries";
 import { updateUserMutation } from "schema/mutations";
 import { defaultPic } from "components/shared/constants";
 import Loading from "components/shared/loading";
-import Error from "components/shared/error";
+import ErrorContainer from "components/shared/error";
 import BackButton from "components/shared/back-button";
 
 import styles from "./UserProfile.styles";
 
 const useStyles = createUseStyles(styles);
 
-const UserProfile = ({ history }) => {
+const UserProfile = ({ history :{push} }) => {
   const classes = useStyles();
 
   const client = useApolloClient();
@@ -72,13 +72,12 @@ const UserProfile = ({ history }) => {
     currentAbout,
     currentAvatar
   ];
-
   const validateForm = () => {
     return {
-      email: email.length === 0,
-      firstName: !firstName || firstName.length === 0,
-      lastName: !lastName || lastName.length === 0,
-      about: !about || about.length > 500
+      email: email.length === 0 || email.length > 150,
+      firstName: firstName.length === 0 || firstName.length > 30,
+      lastName: lastName.length === 0 || lastName.length > 150,
+      about: about.length === 0 || about.length > 500
     };
   };
 
@@ -115,28 +114,26 @@ const UserProfile = ({ history }) => {
           }
         });
       }
-    })
-      .then(
-        ({
-          data: {
-            updateUser: { avatar }
-          }
-        }) => {
-          setShowUpdateAlert(true);
-          if (avatar) {
-            setAvatar(avatar);
-            client.writeData({
-              data: {
-                currentUser: {
-                  ...currentUser,
-                  avatar
-                }
-              }
-            });
-          }
+    }).then(
+      ({
+        data: {
+          updateUser: { avatar }
         }
-      )
-      .catch(e => console.log(e));
+      }) => {
+        setShowUpdateAlert(true);
+        if (avatar) {
+          setAvatar(avatar);
+          client.writeData({
+            data: {
+              currentUser: {
+                ...currentUser,
+                avatar
+              }
+            }
+          });
+        }
+      }
+    );
   };
 
   useEffect(() => {
@@ -146,11 +143,11 @@ const UserProfile = ({ history }) => {
   }, [avatar]);
 
   if (loading || mutationLoading) return <Loading />;
-  if (error || mutationError) return <Error />;
+  if (error || mutationError) return <ErrorContainer />;
 
   return (
     <>
-      <BackButton onClick={() => history.push("/polls")} />
+      <BackButton onClick={() => push("/polls")} />
 
       <Form onSubmit={handleSubmit}>
         <div className={classes.userContent}>

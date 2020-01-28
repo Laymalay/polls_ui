@@ -21,7 +21,7 @@ import styles from "./Login.styles";
 
 const useStyles = createUseStyles(styles);
 
-const Login = ({ history }) => {
+const Login = ({ history: { push } }) => {
   const classes = useStyles();
 
   const client = useApolloClient();
@@ -45,8 +45,8 @@ const Login = ({ history }) => {
   if (loadingUser) return <Loading />;
 
   if (data && data.currentUser) {
-    client.writeData({ data: { isLoggedIn: true} });
-    history.push("/polls");
+    client.writeData({ data: { isLoggedIn: true } });
+    push("/polls");
   }
 
   const validateForm = () => {

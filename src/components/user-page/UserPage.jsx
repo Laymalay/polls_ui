@@ -8,19 +8,24 @@ import { getUserQuery } from "schema/queries";
 import Loading from "components/shared/loading";
 import BackButton from "components/shared/back-button";
 import { defaultPic } from "components/shared/constants";
-import Error from "components/shared/error";
+import ErrorContainer from "components/shared/error";
 
 import styles from "./UserPage.styles";
 
 const useStyles = createUseStyles(styles);
 
-const UserPage = ({ history, match }) => {
+const UserPage = ({
+  history: { push },
+  match: {
+    params: { id: userId }
+  }
+}) => {
   const classes = useStyles();
 
   const [avatar, setAvatar] = useState("");
   const { data: { user } = {}, loading, error } = useQuery(getUserQuery, {
     variables: {
-      id: match.params.id
+      id: userId
     }
   });
 
@@ -31,13 +36,13 @@ const UserPage = ({ history, match }) => {
   );
 
   if (loading) return <Loading />;
-  if (error) return <Error />;
+  if (error) return <ErrorContainer />;
 
   const { id, username, firstName, lastName, email, about } = user;
 
   return (
     <>
-      <BackButton onClick={() => history.push("/users")} />
+      <BackButton onClick={() => push("/users")} />
       {user && (
         <div className={classes.userPageContent}>
           <div className={classes.columnFlex}>

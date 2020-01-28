@@ -50,6 +50,8 @@ export const createPollMutation = gql`
       id
       creator {
         username
+        id
+        avatar
       }
     }
   }

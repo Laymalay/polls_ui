@@ -21,8 +21,8 @@ const PollPassing = ({ poll, passRequest }) => {
   useMemo(() => {
     if (poll.questions) {
       setAnswers(
-        poll.questions.map(question => ({
-          questionId: question.id,
+        poll.questions.map(({ id }) => ({
+          questionId: id,
           choiceId: undefined
         }))
       );
@@ -55,50 +55,48 @@ const PollPassing = ({ poll, passRequest }) => {
   };
 
   return (
-    <>
-      <div className={classes.mainContent}>
-        <PollHeader
-          avatar={creator.avatar}
-          imagePath={imagePath}
-          title={title}
-          username={creator.username}
-          description={description}
-        />
-        <Form onSubmit={handleSubmit}>
-          <hr />
-          <div className={classes.pollQuestionTitle}>Questions:</div>
-          {questions.map(question => (
-            <Form.Group key={question.id} className={classes.question} as={Row}>
-              <Form.Label as="legend" column sm={8}>
-                {question.title}
-              </Form.Label>
-              <Col sm={3}>
-                {question.choices.map(choice => (
-                  <Form.Check
-                    custom
-                    type="radio"
-                    key={`${question.title}${choice.id}`}
-                    name={question.title}
-                    id={choice.id}
-                    onChange={_ => updateAnswers(question.id, choice.id)}
-                    label={choice.title}
-                  />
-                ))}
-              </Col>
-            </Form.Group>
-          ))}
-          <Button
-            size="lg"
-            variant="outline-info"
-            className={classes.sendBtn}
-            disabled={!ifFormValid}
-            type="submit"
-          >
-            Send
-          </Button>
-        </Form>
-      </div>
-    </>
+    <div className={classes.mainContent}>
+      <PollHeader
+        avatar={creator.avatar}
+        imagePath={imagePath}
+        title={title}
+        username={creator.username}
+        description={description}
+      />
+      <Form onSubmit={handleSubmit}>
+        <hr />
+        <div className={classes.pollQuestionTitle}>Questions:</div>
+        {questions.map(({ id: questionId, title: questionTitle, choices }) => (
+          <Form.Group key={questionId} className={classes.question} as={Row}>
+            <Form.Label as="legend" column sm={8}>
+              {questionTitle}
+            </Form.Label>
+            <Col sm={3}>
+              {choices.map(({ id, title }) => (
+                <Form.Check
+                  custom
+                  type="radio"
+                  key={`${questionTitle}${id}`}
+                  name={questionTitle}
+                  id={id}
+                  onChange={() => updateAnswers(questionId, id)}
+                  label={title}
+                />
+              ))}
+            </Col>
+          </Form.Group>
+        ))}
+        <Button
+          size="lg"
+          variant="outline-info"
+          className={classes.sendBtn}
+          disabled={!ifFormValid}
+          type="submit"
+        >
+          Send
+        </Button>
+      </Form>
+    </div>
   );
 };
 
