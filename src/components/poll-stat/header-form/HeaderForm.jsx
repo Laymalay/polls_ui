@@ -32,6 +32,7 @@ const HeaderForm = ({
 
   const handleSubmit = event => {
     event.preventDefault();
+
     updatePoll({
       variables: {
         title,
@@ -39,7 +40,7 @@ const HeaderForm = ({
         imagePath,
         id
       }
-    }).then(data => setShowUpdateAlert(true));
+    }).then(() => setShowUpdateAlert(true));
   };
 
   const validateForm = () => {

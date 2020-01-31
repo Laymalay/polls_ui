@@ -59,7 +59,7 @@ export const Header = () => {
       {username && (
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            Signed in as: &nbsp;
+            Signed in as:
             <Link className={classes.userLink} to="/userprofile">
               {username}
             </Link>

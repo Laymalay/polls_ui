@@ -111,10 +111,6 @@ export const getQuestionQuery = gql`
       title
       stat
       answer
-      choices {
-        id
-        title
-      }
       answeredQuestions {
         id
         correct

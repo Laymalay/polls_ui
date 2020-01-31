@@ -27,7 +27,6 @@ const PollStat = ({ history: { push }, poll }) => {
   };
 
   return (
-    <>
       <div className={classes.pollStatForm}>
         <BackButton onClick={() => push("/polls")} />
         <HeaderForm poll={poll} />
@@ -44,7 +43,6 @@ const PollStat = ({ history: { push }, poll }) => {
           Delete poll
         </Button>
       </div>
-    </>
   );
 };
 

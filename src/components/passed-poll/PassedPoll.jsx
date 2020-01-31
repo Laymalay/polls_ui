@@ -43,34 +43,32 @@ const PassedPoll = ({ passedPollId, passRequest }) => {
       <p className={classes.passedPollScore}>
         Score: <b>{score * 100}%</b>{" "}
       </p>
-      {answers.map(({ question, correct, choice }) => {
-        return (
-          <div
-            key={question.title}
-            className={correct ? classes.correct : classes.wrong}
-            as={Row}
-          >
-            <Form.Label as="legend" column sm={5}>
-              {question.title}
-            </Form.Label>
-            <Col sm={3}>
-              {question.choices.map(({ id, title }) => (
-                <Form.Check
-                  readOnly
-                  custom
-                  disabled={choice.id !== id}
-                  type="radio"
-                  key={`${question.title}${id}`}
-                  name={question.title}
-                  id={id}
-                  label={title}
-                  checked={choice.id === id}
-                />
-              ))}
-            </Col>
-          </div>
-        );
-      })}
+      {answers.map(({ question, correct, choice }) => (
+        <div
+          key={question.title}
+          className={correct ? classes.correct : classes.wrong}
+          as={Row}
+        >
+          <Form.Label as="legend" column sm={5}>
+            {question.title}
+          </Form.Label>
+          <Col sm={3}>
+            {question.choices.map(({ id, title }) => (
+              <Form.Check
+                readOnly
+                custom
+                disabled={choice.id !== id}
+                type="radio"
+                key={`${question.title}${id}`}
+                name={question.title}
+                id={id}
+                label={title}
+                checked={choice.id === id}
+              />
+            ))}
+          </Col>
+        </div>
+      ))}
 
       <Button
         size="lg"

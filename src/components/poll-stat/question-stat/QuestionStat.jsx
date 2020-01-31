@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PieChart from "react-minimal-pie-chart";
 import { useQuery } from "react-apollo";
 import { Row } from "react-bootstrap";
@@ -15,6 +15,7 @@ const useStyles = createUseStyles(styles);
 
 const QuestionStat = ({ question: { id } }) => {
   const classes = useStyles();
+  const [statistic, setStatistic] = useState([]);
 
   const { data: { question = {} } = {}, loading, error } = useQuery(
     getQuestionQuery,
@@ -26,30 +27,30 @@ const QuestionStat = ({ question: { id } }) => {
     }
   );
 
+  const { answeredQuestions, answer, stat } = question;
+
+  const getColor = () =>
+    randomColor({
+      luminosity: "bright",
+      hue: "random",
+      format: "rgba",
+      alpha: 0.6
+    });
+
+  useEffect(() => {
+    if (stat) {
+      let parsedStat = JSON.parse(stat);
+      parsedStat = parsedStat.map(item => ({ ...item, color: getColor() }));
+
+      setStatistic(parsedStat);
+    }
+  }, [stat]);
+
   if (loading) return <Loading />;
   if (error) return <ErrorContainer />;
 
-  const { answeredQuestions, choices, answer, stat } = question;
-
-  const statistic = JSON.parse(stat);
-
-  // Added color and title to statistic
-  choices.forEach(
-    ({ id, title }) =>
-      (statistic[id] = {
-        value: statistic[id],
-        title: title,
-        color: randomColor({
-          luminosity: "bright",
-          hue: "random",
-          format: "rgba",
-          alpha: 0.6
-        })
-      })
-  );
-
-  const statView = () => {
-    return answeredQuestions.length > 0 ? (
+  const statView = () =>
+    answeredQuestions.length > 0 ? (
       <PieChart
         className={classes.questionChart}
         animate
@@ -60,23 +61,24 @@ const QuestionStat = ({ question: { id } }) => {
           fontFamily: "sans-serif",
           fontSize: "13px"
         }}
-        data={Object.values(statistic).filter(({ value }) => value !== 0)}
+        data={statistic.filter(({ value }) => value !== 0)}
       />
     ) : (
       <p className={classes.waitAlert}>waiting for answers</p>
     );
-  };
 
   return (
     <div className={classes.questionStatContent}>
       <p className={classes.questionStatTitle}>{question.title}</p>
 
       <div className={classes.questionStatChoices}>
-        {Object.values(statistic).map(({ title, color }) => (
+        {statistic.map(({ title, color }) => (
           <Row key={title} className={classes.line}>
             <div>
-              <span style={{ color }} className="oi oi-media-record"></span>
-              &nbsp;
+              <span
+                style={{ color, marginRight: 5 }}
+                className="oi oi-media-record"
+              ></span>
               {title}
             </div>
             {answer === title && <span className="oi oi-check"></span>}
