@@ -1,6 +1,11 @@
 import React from "react";
 import { useQuery } from "react-apollo-hooks";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch
+} from "react-router-dom";
 
 import { getCurrentUserQuery, isUserLoggedInQuery } from "schema/queries";
 import CreatePoll from "./create-poll";
@@ -11,7 +16,6 @@ import Header from "./header";
 import Login from "./login";
 import Loading from "./shared/loading";
 import UserProfile from "./user-profile";
-import PrivateRoute from "./PrivateRoute";
 import PageNotFound from "./page-not-found";
 import UserList from "./user-list";
 import UserPage from "./user-page";
@@ -29,25 +33,29 @@ const App = () => {
   );
 
   if (loading) return <Loading />;
-  if (error) return <ErrorContainer />;
+  if (error && error.networkError) return <ErrorContainer />;
 
   return (
     <Router>
-      {isLoggedIn && <Header />}
-
+      {!isLoggedIn && <Redirect to="/login" />}
       <Route path="/login" component={Login} />
 
-      <Switch>
-        <PrivateRoute exact path="/" component={AllPolls} />
-        <PrivateRoute path="/polls" component={AllPolls} />
-        <PrivateRoute path="/pollview/:id" component={PollView} />
-        <PrivateRoute path="/userpolls/:id" component={UserPolls} />
-        <PrivateRoute path="/userprofile" component={UserProfile} />
-        <PrivateRoute path="/createpoll" component={CreatePoll} />
-        <PrivateRoute path="/users" component={UserList} />
-        <PrivateRoute path="/user/:id" component={UserPage} />
-        <PrivateRoute component={PageNotFound} />
-      </Switch>
+      {isLoggedIn && (
+        <>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={AllPolls} />
+            <Route path="/polls" component={AllPolls} />
+            <Route path="/pollview/:id" component={PollView} />
+            <Route path="/userpolls/:id" component={UserPolls} />
+            <Route path="/userprofile" component={UserProfile} />
+            <Route path="/createpoll" component={CreatePoll} />
+            <Route path="/users" component={UserList} />
+            <Route path="/user/:id" component={UserPage} />
+            <Route component={PageNotFound} />
+          </Switch>
+        </>
+      )}
     </Router>
   );
 };
