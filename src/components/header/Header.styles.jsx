@@ -21,6 +21,7 @@ const style = {
     backgroundColor: "rgba(23, 163, 184, 1)"
   },
   userLink: {
+    marginLeft: 10,
     "&:hover": {
       color: "rgba(255, 255, 255, 0.411)",
       fontWeight: "bold"

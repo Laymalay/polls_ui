@@ -50,9 +50,7 @@ export const CreatePoll = ({ history: { push } }) => {
   const isCreateDisabled =
     Object.keys(errors).some(x => errors[x]) || questions.length <= 1;
 
-  const handleSubmit = event => {
-    event.preventDefault();
-
+  const handleCreate = () => {
     const parsed_questions = questions.reduce(
       (arr, { questionTitle, questionAnswer, questionChoices }) => {
         if (questionTitle) {
@@ -144,7 +142,7 @@ export const CreatePoll = ({ history: { push } }) => {
         className={classes.createPollBtn}
         disabled={isCreateDisabled}
         type="button"
-        onClick={handleSubmit}
+        onClick={handleCreate}
       >
         Create
       </Button>

@@ -64,13 +64,12 @@ const UserProfile = ({ history: { push } }) => {
   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
 
   const fields = [email, firstName, lastName, about, avatar];
-
   const initValues = [
     currentEmail,
     currentFirstName,
     currentLastName,
     currentAbout,
-    currentAvatar
+    currentAvatar ? currentAvatar : defaultPic
   ];
   const validateForm = () => {
     return {
@@ -83,15 +82,12 @@ const UserProfile = ({ history: { push } }) => {
 
   const errors = validateForm();
 
-  const wasChanged = zipWith(fields, initValues, (field, init) => {
-    return field !== init;
-  }).some(el => el);
+  const wasChanged = zipWith(fields, initValues, (field, init) => field !== init).some(el => el);
 
   const isUpdateDisabled =
     Object.keys(errors).some(x => errors[x]) || !wasChanged;
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const handleSubmit = () => {
     updateUser({
       variables: {
         ...currentUser,
