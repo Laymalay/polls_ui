@@ -38,7 +38,7 @@ const UserProfile = ({ history: { push } }) => {
     setAvatar(file);
   };
 
-  const { data: { currentUser } = {}, loading, error } = useQuery(
+  const { data: { currentUser } = {}, loading, error, refetch } = useQuery(
     getCurrentUserQuery
   );
 
@@ -82,7 +82,11 @@ const UserProfile = ({ history: { push } }) => {
 
   const errors = validateForm();
 
-  const wasChanged = zipWith(fields, initValues, (field, init) => field !== init).some(el => el);
+  const wasChanged = zipWith(
+    fields,
+    initValues,
+    (field, init) => field !== init
+  ).some(el => el);
 
   const isUpdateDisabled =
     Object.keys(errors).some(x => errors[x]) || !wasChanged;
@@ -96,19 +100,6 @@ const UserProfile = ({ history: { push } }) => {
         firstName,
         lastName,
         about
-      },
-      update(cache, { data }) {
-        cache.writeData({
-          data: {
-            currentUser: {
-              ...currentUser,
-              firstName,
-              email,
-              lastName,
-              about
-            }
-          }
-        });
       }
     }).then(
       ({
@@ -116,6 +107,7 @@ const UserProfile = ({ history: { push } }) => {
           updateUser: { avatar }
         }
       }) => {
+        refetch();
         setShowUpdateAlert(true);
         if (avatar) {
           setAvatar(avatar);
